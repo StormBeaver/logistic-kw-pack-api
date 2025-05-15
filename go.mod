@@ -1,4 +1,4 @@
-module route255/L-KW-P-API
+module route255/logistic-kw-pack-api
 
 go 1.24.0
 

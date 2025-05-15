@@ -5,7 +5,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"route255/L-KW-P-API/internal/app/retranslator"
+	"route255/logistic-kw-pack-api/internal/app/retranslator"
 )
 
 func main() {
