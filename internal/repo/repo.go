@@ -5,7 +5,7 @@ import (
 
 	"github.com/jmoiron/sqlx"
 
-	"github.com/ozonmp/omp-template-api/internal/model"
+	"route255/logistic-kw-pack-api/internal/model"
 )
 
 // Repo is DAO for Template

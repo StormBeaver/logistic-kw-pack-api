@@ -12,10 +12,10 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 	_ "github.com/lib/pq"
 
-	"github.com/ozonmp/omp-template-api/internal/config"
-	"github.com/ozonmp/omp-template-api/internal/database"
-	"github.com/ozonmp/omp-template-api/internal/server"
-	"github.com/ozonmp/omp-template-api/internal/tracer"
+	"route255/logistic-kw-pack-api/internal/config"
+	"route255/logistic-kw-pack-api/internal/database"
+	"route255/logistic-kw-pack-api/internal/server"
+	"route255/logistic-kw-pack-api/internal/tracer"
 )
 
 var (
