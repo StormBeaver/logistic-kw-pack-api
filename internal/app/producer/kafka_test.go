@@ -3,8 +3,8 @@ package producer
 import (
 	"errors"
 	"fmt"
-	"route255/L-KW-P-API/internal/mocks"
-	"route255/L-KW-P-API/internal/model"
+	"route255/logistic-kw-pack-api/internal/mocks"
+	"route255/logistic-kw-pack-api/internal/model"
 	"sync/atomic"
 	"testing"
 	"time"

@@ -5,8 +5,8 @@ import (
 	"sync"
 	"time"
 
-	"route255/L-KW-P-API/internal/app/repo"
-	"route255/L-KW-P-API/internal/model"
+	"route255/logistic-kw-pack-api/internal/app/repo"
+	"route255/logistic-kw-pack-api/internal/model"
 )
 
 type Consumer interface {

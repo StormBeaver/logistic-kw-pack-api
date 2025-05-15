@@ -1,7 +1,7 @@
 package sender
 
 import (
-	"route255/L-KW-P-API/internal/model"
+	"route255/logistic-kw-pack-api/internal/model"
 )
 
 type EventSender interface {

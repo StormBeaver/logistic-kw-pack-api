@@ -1,6 +1,6 @@
 module github.com/ozonmp/omp-template-api
 
-go 1.16
+go 1.24.0
 
 require (
 	github.com/HdrHistogram/hdrhistogram-go v1.1.2 // indirect

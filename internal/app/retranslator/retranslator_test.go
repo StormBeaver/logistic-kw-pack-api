@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"route255/L-KW-P-API/internal/mocks"
+	"route255/logistic-kw-pack-api/internal/mocks"
 
 	"github.com/golang/mock/gomock"
 )

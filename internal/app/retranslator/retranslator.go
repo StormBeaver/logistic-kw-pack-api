@@ -3,12 +3,12 @@ package retranslator
 import (
 	"time"
 
-	"route255/L-KW-P-API/internal/model"
+	"route255/logistic-kw-pack-api/internal/model"
 
-	"route255/L-KW-P-API/internal/app/consumer"
-	"route255/L-KW-P-API/internal/app/producer"
-	"route255/L-KW-P-API/internal/app/repo"
-	"route255/L-KW-P-API/internal/app/sender"
+	"route255/logistic-kw-pack-api/internal/app/consumer"
+	"route255/logistic-kw-pack-api/internal/app/producer"
+	"route255/logistic-kw-pack-api/internal/app/repo"
+	"route255/logistic-kw-pack-api/internal/app/sender"
 
 	"github.com/gammazero/workerpool"
 )
