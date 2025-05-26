@@ -16,13 +16,12 @@ const (
 )
 
 type Pack struct {
-	Id       uint64
-	Title    string
-	Describe string
+	ID  uint64 `db:"id"`
+	Foo uint64 `db:"foo"`
 }
 
 func (p *Pack) String() string {
-	return fmt.Sprintf("ID: %d\nTitle: %s\nDescribe: %s", p.Id, p.Title, p.Describe)
+	return fmt.Sprintf("ID: %d\nFoo: %v\n", p.ID, p.Foo)
 }
 
 type PackEvent struct {

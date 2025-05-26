@@ -1,6 +1,6 @@
 module github.com/ozonmp/omp-template-api/pkg/omp-template-api
 
-go 1.17
+go 1.24.0
 
 require (
 	github.com/envoyproxy/protoc-gen-validate v0.6.2

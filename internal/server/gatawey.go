@@ -14,7 +14,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 
-	pb "github.com/ozonmp/omp-template-api/pkg/omp-template-api"
+	pb "github.com/ozonmp/logistic-pack-api/pkg/logistic-pack-api"
 )
 
 var (
@@ -42,7 +42,7 @@ func createGatewayServer(grpcAddr, gatewayAddr string) *http.Server {
 	}
 
 	mux := runtime.NewServeMux()
-	if err := pb.RegisterOmpTemplateApiServiceHandler(context.Background(), mux, conn); err != nil {
+	if err := pb.RegisterLogisticPackApiServiceHandler(context.Background(), mux, conn); err != nil {
 		log.Fatal().Err(err).Msg("Failed registration handler")
 	}
 

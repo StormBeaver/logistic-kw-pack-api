@@ -12,7 +12,7 @@ require (
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/lib/pq v1.10.3
 	github.com/opentracing/opentracing-go v1.2.0
-	github.com/ozonmp/omp-template-api/pkg/omp-template-api v0.0.0-00010101000000-000000000000
+	github.com/ozonmp/logistic-template-api/pkg/logistic-template-api v0.0.0-00010101000000-000000000000
 	github.com/pressly/goose/v3 v3.1.0
 	github.com/prometheus/client_golang v1.11.0
 	github.com/rs/zerolog v1.24.0

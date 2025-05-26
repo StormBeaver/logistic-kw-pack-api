@@ -12,57 +12,57 @@ import (
 
 	"route255/logistic-kw-pack-api/internal/repo"
 
-	pb "github.com/ozonmp/omp-template-api/pkg/omp-template-api"
+	pb "github.com/ozonmp/omp-pack-api/pkg/omp-pack-api"
 )
 
 var (
-	totalTemplateNotFound = promauto.NewCounter(prometheus.CounterOpts{
-		Name: "omp_template_api_template_not_found_total",
-		Help: "Total number of templates that were not found",
+	totalPackNotFound = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "logistic_pack_api_pack_not_found_total",
+		Help: "Total number of packs that were not found",
 	})
 )
 
-type templateAPI struct {
-	pb.UnimplementedOmpTemplateApiServiceServer
+type packAPI struct {
+	pb.UnimplementedLogisticPackApiServiceServer
 	repo repo.Repo
 }
 
-// NewTemplateAPI returns api of omp-template-api service
-func NewTemplateAPI(r repo.Repo) pb.OmpTemplateApiServiceServer {
-	return &templateAPI{repo: r}
+// NewPackAPI returns api of logistic-pack-api service
+func NewPackAPI(r repo.Repo) pb.LogisticPackApiServiceServer {
+	return &packAPI{repo: r}
 }
 
-func (o *templateAPI) DescribeTemplateV1(
+func (o *packAPI) DescribePackV1(
 	ctx context.Context,
-	req *pb.DescribeTemplateV1Request,
-) (*pb.DescribeTemplateV1Response, error) {
+	req *pb.DescribePackV1Request,
+) (*pb.DescribePackV1Response, error) {
 
 	if err := req.Validate(); err != nil {
-		log.Error().Err(err).Msg("DescribeTemplateV1 - invalid argument")
+		log.Error().Err(err).Msg("DescribePackV1 - invalid argument")
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	template, err := o.repo.DescribeTemplate(ctx, req.TemplateId)
+	pack, err := o.repo.DescribePack(ctx, req.PackId)
 	if err != nil {
-		log.Error().Err(err).Msg("DescribeTemplateV1 -- failed")
+		log.Error().Err(err).Msg("DescribePackV1 -- failed")
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	if template == nil {
-		log.Debug().Uint64("templateId", req.TemplateId).Msg("template not found")
-		totalTemplateNotFound.Inc()
+	if pack == nil {
+		log.Debug().Uint64("packId", req.PackId).Msg("pack not found")
+		totalPackNotFound.Inc()
 
-		return nil, status.Error(codes.NotFound, "template not found")
+		return nil, status.Error(codes.NotFound, "pack not found")
 	}
 
-	log.Debug().Msg("DescribeTemplateV1 - success")
+	log.Debug().Msg("DescribePackV1 - success")
 
-	return &pb.DescribeTemplateV1Response{
-		Value: &pb.Template{
-			Id:  template.ID,
-			Foo: template.Foo,
+	return &pb.DescribePackV1Response{
+		Value: &pb.Pack{
+			Id:  pack.ID,
+			Foo: pack.Foo,
 		},
 	}, nil
 }

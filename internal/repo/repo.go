@@ -8,9 +8,9 @@ import (
 	"route255/logistic-kw-pack-api/internal/model"
 )
 
-// Repo is DAO for Template
+// Repo is DAO for Pack
 type Repo interface {
-	DescribeTemplate(ctx context.Context, templateID uint64) (*model.Template, error)
+	DescribePack(ctx context.Context, packID uint64) (*model.Pack, error)
 }
 
 type repo struct {
@@ -23,6 +23,6 @@ func NewRepo(db *sqlx.DB, batchSize uint) Repo {
 	return &repo{db: db, batchSize: batchSize}
 }
 
-func (r *repo) DescribeTemplate(ctx context.Context, templateID uint64) (*model.Template, error) {
+func (r *repo) DescribePack(ctx context.Context, packID uint64) (*model.Pack, error) {
 	return nil, nil
 }

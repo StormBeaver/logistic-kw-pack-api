@@ -28,7 +28,7 @@ import (
 	"route255/logistic-kw-pack-api/internal/config"
 	"route255/logistic-kw-pack-api/internal/repo"
 
-	pb "github.com/ozonmp/omp-template-api/pkg/omp-template-api"
+	pb "github.com/ozonmp/logistic-pack-api/pkg/logistic-pack-api"
 )
 
 // GrpcServer is gRPC server
@@ -110,7 +110,7 @@ func (s *GrpcServer) Start(cfg *config.Config) error {
 
 	r := repo.NewRepo(s.db, s.batchSize)
 
-	pb.RegisterOmpTemplateApiServiceServer(grpcServer, api.NewTemplateAPI(r))
+	pb.RegisterLogisticPackApiServiceServer(grpcServer, api.NewPackAPI(r))
 	grpc_prometheus.EnableHandlingTimeHistogram()
 	grpc_prometheus.Register(grpcServer)
 
