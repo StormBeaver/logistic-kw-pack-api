@@ -77,7 +77,7 @@ deps-go:
 	go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@latest
 
 .deps-python:
-	python -m pip install grpcio-tools grpclib protobuf
+	python3 -m pip install grpcio-tools grpclib protobuf
 
 .PHONY: build
 build: generate .build
