@@ -1,19 +1,19 @@
 syntax = "proto3";
 
-package ozonmp.logistic_template_api.v1;
+package ozonmp.logistic_pack_api.v1;
 
 import "validate/validate.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/ozonmp/logistic-template-api/pkg/logistic-template-api;logistic_template_api";
+option go_package = "github.com/ozonmp/logistic-pack-api/pkg/logistic-pack-api;logistic_pack_api";
 
-// LogisticPackApiService - Service for working with templates
+// LogisticPackApiService - Service for working with packs
 service LogisticPackApiService {
-  // DescribePackV1 - Describe a template
+  // DescribePackV1 - Describe a pack
   rpc DescribePackV1(DescribePackV1Request) returns (DescribePackV1Response) {
     option (google.api.http) = {
-      get: "/v1/templates/{template_id}"
+      get: "/v1/packs/{pack_id}"
     };
   }
 }
@@ -25,7 +25,7 @@ message Pack {
 }
 
 message DescribePackV1Request {
-  uint64 template_id = 1 [(validate.rules).uint64.gt = 0];
+  uint64 pack_id = 1 [(validate.rules).uint64.gt = 0];
 }
 
 message DescribePackV1Response {

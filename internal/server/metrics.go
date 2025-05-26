@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"route255/logistic-kw-pack-api/internal/config"
+	"github.com/stormbeaver/logistic-pack-api/internal/config"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )

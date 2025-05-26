@@ -12,10 +12,13 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 	_ "github.com/lib/pq"
 
-	"route255/logistic-kw-pack-api/internal/config"
-	"route255/logistic-kw-pack-api/internal/database"
-	"route255/logistic-kw-pack-api/internal/server"
-	"route255/logistic-kw-pack-api/internal/tracer"
+	"github.com/stormbeaver/logistic-pack-api/internal/server"
+
+	"github.com/stormbeaver/logistic-pack-api/internal/tracer"
+
+	"github.com/stormbeaver/logistic-pack-api/internal/database"
+
+	"github.com/stormbeaver/logistic-pack-api/internal/config"
 )
 
 var (

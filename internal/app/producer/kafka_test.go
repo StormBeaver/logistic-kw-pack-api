@@ -3,11 +3,12 @@ package producer
 import (
 	"errors"
 	"fmt"
-	"route255/logistic-kw-pack-api/internal/mocks"
-	"route255/logistic-kw-pack-api/internal/model"
 	"sync/atomic"
 	"testing"
 	"time"
+
+	"github.com/stormbeaver/logistic-pack-api/internal/mocks"
+	"github.com/stormbeaver/logistic-pack-api/internal/model"
 
 	"github.com/gammazero/workerpool"
 	"github.com/golang/mock/gomock"

@@ -10,9 +10,9 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"route255/logistic-kw-pack-api/internal/repo"
+	"github.com/stormbeaver/logistic-pack-api/internal/repo"
 
-	pb "github.com/ozonmp/omp-pack-api/pkg/omp-pack-api"
+	pb "github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-api"
 )
 
 var (

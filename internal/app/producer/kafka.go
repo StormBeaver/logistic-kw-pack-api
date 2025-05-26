@@ -6,9 +6,9 @@ import (
 	"sync"
 	"time"
 
-	"route255/logistic-kw-pack-api/internal/app/repo"
-	"route255/logistic-kw-pack-api/internal/app/sender"
-	"route255/logistic-kw-pack-api/internal/model"
+	"github.com/stormbeaver/logistic-pack-api/internal/app/repo"
+	"github.com/stormbeaver/logistic-pack-api/internal/app/sender"
+	"github.com/stormbeaver/logistic-pack-api/internal/model"
 
 	"github.com/gammazero/workerpool"
 )

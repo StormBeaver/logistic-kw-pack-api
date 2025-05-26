@@ -1,7 +1,7 @@
 package repo
 
 import (
-	"route255/logistic-kw-pack-api/internal/model"
+	"github.com/stormbeaver/logistic-pack-api/internal/model"
 )
 
 type EventRepo interface {

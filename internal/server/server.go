@@ -24,11 +24,11 @@ import (
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
 
-	"route255/logistic-kw-pack-api/internal/api"
-	"route255/logistic-kw-pack-api/internal/config"
-	"route255/logistic-kw-pack-api/internal/repo"
+	"github.com/stormbeaver/logistic-pack-api/internal/api"
+	"github.com/stormbeaver/logistic-pack-api/internal/config"
+	"github.com/stormbeaver/logistic-pack-api/internal/repo"
 
-	pb "github.com/ozonmp/logistic-pack-api/pkg/logistic-pack-api"
+	pb "github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-api"
 )
 
 // GrpcServer is gRPC server

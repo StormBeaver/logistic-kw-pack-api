@@ -5,7 +5,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"route255/logistic-kw-pack-api/internal/app/retranslator"
+	"github.com/stormbeaver/logistic-pack-api/internal/app/retranslator"
 )
 
 func main() {

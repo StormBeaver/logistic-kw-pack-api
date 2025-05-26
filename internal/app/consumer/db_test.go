@@ -5,12 +5,13 @@ import (
 	"errors"
 	"fmt"
 	"math/rand/v2"
-	"route255/logistic-kw-pack-api/internal/app/repo"
-	"route255/logistic-kw-pack-api/internal/mocks"
-	"route255/logistic-kw-pack-api/internal/model"
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/stormbeaver/logistic-pack-api/internal/app/repo"
+	"github.com/stormbeaver/logistic-pack-api/internal/mocks"
+	"github.com/stormbeaver/logistic-pack-api/internal/model"
 
 	"github.com/golang/mock/gomock"
 )
