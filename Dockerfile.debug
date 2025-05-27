@@ -1,6 +1,6 @@
 # Builder
 
-ARG GITHUB_PATH=github.com/ozonmp/logistic-pack-api
+ARG GITHUB_PATH=github.com/stormbeaver/logistic-pack-api
 
 FROM golang:1.16-alpine AS builder
 

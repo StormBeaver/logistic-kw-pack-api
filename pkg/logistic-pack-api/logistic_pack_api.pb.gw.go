@@ -95,7 +95,7 @@ func RegisterLogisticPackApiServiceHandlerServer(ctx context.Context, mux *runti
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.logistic_pack_api.v1.LogisticPackApiService/DescribePackV1", runtime.WithHTTPPathPattern("/v1/packs/{pack_id}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/DescribePackV1", runtime.WithHTTPPathPattern("/v1/packs/{pack_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -157,7 +157,7 @@ func RegisterLogisticPackApiServiceHandlerClient(ctx context.Context, mux *runti
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.logistic_pack_api.v1.LogisticPackApiService/DescribePackV1", runtime.WithHTTPPathPattern("/v1/packs/{pack_id}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/DescribePackV1", runtime.WithHTTPPathPattern("/v1/packs/{pack_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return

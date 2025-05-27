@@ -32,7 +32,7 @@ func NewLogisticPackApiServiceClient(cc grpc.ClientConnInterface) LogisticPackAp
 
 func (c *logisticPackApiServiceClient) DescribePackV1(ctx context.Context, in *DescribePackV1Request, opts ...grpc.CallOption) (*DescribePackV1Response, error) {
 	out := new(DescribePackV1Response)
-	err := c.cc.Invoke(ctx, "/ozonmp.logistic_pack_api.v1.LogisticPackApiService/DescribePackV1", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/DescribePackV1", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +79,7 @@ func _LogisticPackApiService_DescribePackV1_Handler(srv interface{}, ctx context
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ozonmp.logistic_pack_api.v1.LogisticPackApiService/DescribePackV1",
+		FullMethod: "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/DescribePackV1",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LogisticPackApiServiceServer).DescribePackV1(ctx, req.(*DescribePackV1Request))
@@ -91,7 +91,7 @@ func _LogisticPackApiService_DescribePackV1_Handler(srv interface{}, ctx context
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var LogisticPackApiService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "ozonmp.logistic_pack_api.v1.LogisticPackApiService",
+	ServiceName: "stormbeaver.logistic_pack_api.v1.LogisticPackApiService",
 	HandlerType: (*LogisticPackApiServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

@@ -8,7 +8,7 @@ jobs:
   track_pr:
     runs-on: ubuntu-latest 
     env:
-      GITHUB_ORG: ozonmp
+      GITHUB_ORG: stormbeaver
       GITHUB_PROJECT_NUMBER: 2
     steps:
       - name: Generate token

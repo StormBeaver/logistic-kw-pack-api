@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package ozonmp.logistic_pack_api.v1;
+package stormbeaver.logistic_pack_api.v1;
 
 import "validate/validate.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/ozonmp/logistic-pack-api/pkg/logistic-pack-api;logistic_pack_api";
+option go_package = "github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-api;logistic_pack_api";
 
 // LogisticPackApiService - Service for working with packs
 service LogisticPackApiService {
@@ -30,4 +30,28 @@ message DescribePackV1Request {
 
 message DescribePackV1Response {
   Pack value = 1;
+}
+
+message CreatePackV1Request {
+  string foo = 1;
+}
+
+message CreatePackV1Response {
+  uint64 pack_id = 1;
+}
+
+
+message ListPackV1Request {
+}
+
+message ListPackV1Response {
+  repeated Pack items = 1;
+}
+
+message RemovePackV1Request {
+  uint64 pack_id = 1;
+}
+
+message RemovePackV1Response {
+  bool found = 1;
 }

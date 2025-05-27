@@ -1,4 +1,4 @@
-module github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-api
+module github.com/StormBeaver/logistic-pack-api/pkg/logistic-pack-api
 
 go 1.24.0
 
