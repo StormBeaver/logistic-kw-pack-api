@@ -1,4 +1,4 @@
-# Ozon Marketplace Pack API
+#  Logistic Pack API
 
 ---
 

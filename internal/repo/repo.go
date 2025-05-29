@@ -11,6 +11,9 @@ import (
 // Repo is DAO for Pack
 type Repo interface {
 	DescribePack(ctx context.Context, packID uint64) (*model.Pack, error)
+	CreatePack(ctx context.Context, foo uint64) (*model.Pack, error)
+	RemovePack(ctx context.Context, packID uint64) (*model.Pack, error)
+	ListPacks(ctx context.Context) (*model.Pack, error)
 }
 
 type repo struct {
@@ -24,5 +27,17 @@ func NewRepo(db *sqlx.DB, batchSize uint) Repo {
 }
 
 func (r *repo) DescribePack(ctx context.Context, packID uint64) (*model.Pack, error) {
+	return nil, nil
+}
+
+func (r *repo) CreatePack(ctx context.Context, foo uint64) (*model.Pack, error) {
+	return nil, nil
+}
+
+func (r *repo) RemovePack(ctx context.Context, packID uint64) (*model.Pack, error) {
+	return nil, nil
+}
+
+func (r *repo) ListPacks(ctx context.Context) (*model.Pack, error) {
 	return nil, nil
 }

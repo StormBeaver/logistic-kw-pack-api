@@ -16,6 +16,7 @@ service LogisticPackApiService {
       get: "/v1/packs/{pack_id}"
     };
   }
+  //TODO: fill other rpc methods
 }
 
 message Pack {
