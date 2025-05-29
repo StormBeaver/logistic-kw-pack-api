@@ -36,7 +36,7 @@ func (o *packAPI) ListPackV1(
 }
 
 func convertPack(pack []*model.Pack) []*pb.Pack {
-	result := make([]*pb.Pack, 0)
+	result := make([]*pb.Pack, 0, len(pack))
 	for _, v := range pack {
 		result = append(result, &pb.Pack{Id: v.ID, Name: v.Name})
 	}
