@@ -42,7 +42,7 @@ func (m *Pack) Validate() error {
 
 	// no validation rules for Id
 
-	// no validation rules for Foo
+	// no validation rules for Name
 
 	if v, ok := interface{}(m.GetCreated()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -270,7 +270,19 @@ func (m *CreatePackV1Request) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Foo
+	if utf8.RuneCountInString(m.GetName()) < 3 {
+		return CreatePackV1RequestValidationError{
+			field:  "Name",
+			reason: "value length must be at least 3 runes",
+		}
+	}
+
+	if len(m.GetName()) > 256 {
+		return CreatePackV1RequestValidationError{
+			field:  "Name",
+			reason: "value length must be at most 256 bytes",
+		}
+	}
 
 	return nil
 }
@@ -557,7 +569,12 @@ func (m *RemovePackV1Request) Validate() error {
 		return nil
 	}
 
-	// no validation rules for PackId
+	if m.GetPackId() <= 0 {
+		return RemovePackV1RequestValidationError{
+			field:  "PackId",
+			reason: "value must be greater than 0",
+		}
+	}
 
 	return nil
 }

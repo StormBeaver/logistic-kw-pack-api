@@ -16,12 +16,32 @@ service LogisticPackApiService {
       get: "/v1/packs/{pack_id}"
     };
   }
-  //TODO: fill other rpc methods
+
+  //CreatePackv1 - Create a new pack
+  rpc CreatePackV1(CreatePackV1Request) returns (CreatePackV1Response) {
+       option (google.api.http) = {
+      post: "/v1/packs/create"
+    };
+  }
+
+  //ListPackv1 - list all packs
+  rpc ListPackV1(ListPackV1Request) returns (ListPackV1Response) {
+       option (google.api.http) = {
+      get: "/v1/packs"
+    };
+  }
+
+  //RemovePackV1 - remove a pack
+  rpc RemovePackV1(RemovePackV1Request) returns (RemovePackV1Response) {
+       option (google.api.http) = {
+      post: "/v1/packs/remove"
+    };
+  }
 }
 
 message Pack {
   uint64 id  = 1;
-  uint64 foo = 2;
+  string name = 2;
   google.protobuf.Timestamp created = 3;
 }
 
@@ -34,7 +54,7 @@ message DescribePackV1Response {
 }
 
 message CreatePackV1Request {
-  string foo = 1;
+  string name = 1 [(validate.rules).string = {min_len: 3, max_bytes:256}];
 }
 
 message CreatePackV1Response {
@@ -50,7 +70,7 @@ message ListPackV1Response {
 }
 
 message RemovePackV1Request {
-  uint64 pack_id = 1;
+  uint64 pack_id = 1 [(validate.rules).uint64.gt = 0];
 }
 
 message RemovePackV1Response {

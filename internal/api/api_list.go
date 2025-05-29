@@ -1,0 +1,44 @@
+package api
+
+import (
+	"context"
+
+	"github.com/rs/zerolog/log"
+	"github.com/stormbeaver/logistic-pack-api/internal/model"
+	pb "github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-api"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+)
+
+// ListPackv1 - list all packs
+func (o *packAPI) ListPackV1(
+	ctx context.Context,
+	req *pb.ListPackV1Request,
+) (*pb.ListPackV1Response, error) {
+
+	pack, err := o.repo.ListPacks(ctx)
+	if err != nil {
+		log.Error().Err(err).Msg("ListPackV1 -- failed")
+
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	if pack == nil {
+		log.Debug().Str("pack", "all").Msg("packs not found")
+		totalPackNotFound.Inc()
+
+		return nil, status.Error(codes.NotFound, "packs not found")
+	}
+
+	return &pb.ListPackV1Response{
+		Items: convertPack(pack),
+	}, nil
+}
+
+func convertPack(pack []*model.Pack) []*pb.Pack {
+	result := make([]*pb.Pack, 0)
+	for _, v := range pack {
+		result = append(result, &pb.Pack{Id: v.ID, Name: v.Name})
+	}
+	return result
+}

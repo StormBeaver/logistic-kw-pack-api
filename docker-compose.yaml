@@ -1,4 +1,4 @@
-version: "3.9"
+
 
 services:
   logistic-pack-api:
@@ -125,7 +125,7 @@ services:
     volumes:
       - ./swagger:/swagger
     environment:
-      SWAGGER_JSON: /swagger/stormbeaver/logistic_pack_api/v1/logistic_pack_api.swagger.json
+      SWAGGER_JSON: /swagger/stormbeaver/logistic_pack_api/v1/logistic_pack_api.swaggser.json
     depends_on:
       - logistic-pack-api
     networks:
