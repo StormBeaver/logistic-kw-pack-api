@@ -24,11 +24,13 @@ func (o *packAPI) ListPackV1(
 	}
 
 	if pack == nil {
-		log.Debug().Str("pack", "all").Msg("packs not found")
+		log.Debug().Str("packs", "list").Msg("packs not found")
 		totalPackNotFound.Inc()
 
 		return nil, status.Error(codes.NotFound, "packs not found")
 	}
+
+	log.Debug().Msg("ListPackV1 - success")
 
 	return &pb.ListPackV1Response{
 		Items: convertPack(pack),
