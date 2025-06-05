@@ -7,5 +7,5 @@ import (
 )
 
 func (r *repo) CreatePack(ctx context.Context, name string) (*model.Pack, error) {
-	return &model.Pack{ID: 2, Name: "empty2"}, nil
+	return &model.Pack{}, nil
 }

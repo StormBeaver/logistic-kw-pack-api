@@ -30,7 +30,7 @@ func (o *packAPI) RemovePackV1(
 	}
 
 	if pack == nil {
-		log.Debug().Uint64("packId", req.PackId).Msg("pack not found")
+		log.Debug().Uint64("packId", req.GetPackId()).Msg("pack not found")
 		totalPackNotFound.Inc()
 
 		return nil, status.Error(codes.NotFound, "pack not found")

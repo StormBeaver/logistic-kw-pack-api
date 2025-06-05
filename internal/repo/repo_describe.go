@@ -7,5 +7,5 @@ import (
 )
 
 func (r *repo) DescribePack(ctx context.Context, packID uint64) (*model.Pack, error) {
-	return &model.Pack{ID: 1, Name: "empty1"}, nil
+	return &model.Pack{}, nil
 }

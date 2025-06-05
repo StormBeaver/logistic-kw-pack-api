@@ -33,11 +33,11 @@ func (o *packAPI) ListPackV1(
 	log.Debug().Msg("ListPackV1 - success")
 
 	return &pb.ListPackV1Response{
-		Items: convertPack(pack),
+		Items: convertPackList(pack),
 	}, nil
 }
 
-func convertPack(pack []*model.Pack) []*pb.Pack {
+func convertPackList(pack []*model.Pack) []*pb.Pack {
 	result := make([]*pb.Pack, 0, len(pack))
 	for _, v := range pack {
 		result = append(result, &pb.Pack{Id: v.ID, Name: v.Name})
