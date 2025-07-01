@@ -2,7 +2,7 @@
 
 ARG GITHUB_PATH=github.com/stormbeaver/logistic-pack-api
 
-FROM golang:1.16-alpine AS builder
+FROM golang:1.24.1-alpine AS builder
 
 WORKDIR /home/${GITHUB_PATH}
 

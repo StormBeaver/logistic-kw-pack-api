@@ -1,0 +1,65 @@
+project:
+  name: Ozon Code Platform Pack API
+  debug: true
+  environment: development
+
+grpc:
+  host: 0.0.0.0
+  port: 8082
+  maxConnectionIdle: 5 # Minutes
+  timeout: 15 # Seconds
+  maxConnectionAge: 5 # Minutes
+
+rest:
+  host: 0.0.0.0
+  port: 8080
+
+metrics:
+  host: 0.0.0.0
+  port: 9100
+  path: /metrics
+
+jaeger:
+  service: "logistic-pack-api"
+  host: "jaeger"
+  port: ":6831"
+
+status:
+  host: 0.0.0.0
+  port: 8000
+  livenessPath: /live
+  readinessPath: /ready
+  versionPath: /version
+
+database:
+  host: localhost  # for local launch
+  # host: postgres
+
+  port: 5432
+  user: postgres
+  password: postgres
+  name: logistic_pack_api
+  sslmode: disable
+  migrations: migrations
+  driver: pgx
+  connections:
+    maxOpenCons: 5
+    maxIdleCons: 5
+    connMaxIdleTime: 5m
+    connMaxLifeTime: 5m
+
+
+kafka:
+  capacity: 512
+  topic: "logistic-pack-events"
+  groupId: "logistic-pack-api"
+  brokers:
+    - "kafka:9092"
+    - "localhost:9094"
+
+retranslator:
+  consumerCount: 2
+  batchSize: 10
+  produserCount: 28
+  workerCount: 2
+  ticker: 3s
