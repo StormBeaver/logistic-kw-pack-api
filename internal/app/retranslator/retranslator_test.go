@@ -1,6 +1,7 @@
 package retranslator
 
 import (
+	"context"
 	"testing"
 	"time"
 
@@ -14,9 +15,10 @@ func TestStart(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	repo := mocks.NewMockEventRepo(ctrl)
 	sender := mocks.NewMockEventSender(ctrl)
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 
-	repo.EXPECT().PreProcess(gomock.Any()).AnyTimes()
-	repo.EXPECT().Lock(gomock.Any()).AnyTimes()
+	repo.EXPECT().PreProcess(ctx, gomock.Any()).AnyTimes()
+	repo.EXPECT().Lock(ctx, gomock.Any()).AnyTimes()
 
 	cfg := Config{
 		ChannelSize:   512,
