@@ -10,15 +10,15 @@ option go_package = "github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-
 
 // LogisticPackApiService - Service for working with packs
 service LogisticPackApiService {
-  // DescribePackV1 - Describe a pack
-  rpc DescribePackV1(DescribePackV1Request) returns (DescribePackV1Response) {
+  // GetPackV1 - Describe a pack
+  rpc GetPackV1(GetPackV1Request) returns (GetPackV1Response) {
     option (google.api.http) = {
       get: "/v1/packs/{pack_id}"
     };
   }
 
   //CreatePackv1 - Create a new pack
-  rpc CreatePackV1(CreatePackV1Request) returns (CreatePackV1Response) {
+  rpc AddPackV1(AddPackV1Request) returns (AddPackV1Response) {
        option (google.api.http) = {
       post: "/v1/packs/create"
     };
@@ -27,14 +27,14 @@ service LogisticPackApiService {
   //ListPackv1 - list all packs
   rpc ListPackV1(ListPackV1Request) returns (ListPackV1Response) {
        option (google.api.http) = {
-      get: "/v1/packs"
+      get: "/v1/packs/{cursor}/{limit}"
     };
   }
 
   //RemovePackV1 - remove a pack
   rpc RemovePackV1(RemovePackV1Request) returns (RemovePackV1Response) {
        option (google.api.http) = {
-      post: "/v1/packs/remove"
+      delete: "/v1/packs/remove"
     };
   }
 }
@@ -45,24 +45,25 @@ message Pack {
   google.protobuf.Timestamp created = 3;
 }
 
-message DescribePackV1Request {
-  uint64 pack_id = 1 [(validate.rules).uint64.gt = 0];
-}
-
-message DescribePackV1Response {
-  Pack value = 1;
-}
-
-message CreatePackV1Request {
+message AddPackV1Request {
   string name = 1 [(validate.rules).string = {min_len: 3, max_bytes:256}];
 }
 
-message CreatePackV1Response {
+message AddPackV1Response {
   uint64 pack_id = 1;
 }
 
+message GetPackV1Request {
+  uint64 pack_id = 1 [(validate.rules).uint64.gt = 0];
+}
+
+message GetPackV1Response {
+  Pack value = 1;
+}
 
 message ListPackV1Request {
+  uint64 cursor = 1 [(validate.rules).uint64.gt = 0];
+  uint64 limit = 2 [(validate.rules).uint64.gt = 0];
 }
 
 message ListPackV1Response {
