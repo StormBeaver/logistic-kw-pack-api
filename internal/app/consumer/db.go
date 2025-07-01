@@ -59,31 +59,6 @@ func (c *consumer) Close() {
 	c.wg.Wait()
 }
 
-func (c *consumer) mainDelivery() {
-	for range c.n {
-		c.wg.Add(1)
-
-		go func() {
-			defer c.wg.Done()
-			ticker := time.NewTicker(c.tick)
-			for {
-				select {
-				case <-ticker.C:
-					events, err := c.repo.Lock(c.batchSize)
-					if err != nil {
-						continue
-					}
-					for _, event := range events {
-						c.events <- event
-					}
-				case <-c.ctx.Done():
-					return
-				}
-			}
-		}()
-	}
-}
-
 func (c *consumer) lockDelivery() {
 	for range c.n {
 		c.wg.Add(1)
@@ -94,7 +69,7 @@ func (c *consumer) lockDelivery() {
 			for {
 				select {
 				case <-ticker.C:
-					events, err := c.repo.PreProcess(c.batchSize)
+					events, err := c.repo.PreProcess(c.ctx, c.batchSize)
 					if err != nil {
 						continue
 					}
@@ -111,4 +86,29 @@ func (c *consumer) lockDelivery() {
 		}()
 	}
 	c.wg.Wait()
+}
+
+func (c *consumer) mainDelivery() {
+	for range c.n {
+		c.wg.Add(1)
+
+		go func() {
+			defer c.wg.Done()
+			ticker := time.NewTicker(c.tick)
+			for {
+				select {
+				case <-ticker.C:
+					events, err := c.repo.Lock(c.ctx, c.batchSize)
+					if err != nil {
+						continue
+					}
+					for _, event := range events {
+						c.events <- event
+					}
+				case <-c.ctx.Done():
+					return
+				}
+			}
+		}()
+	}
 }
