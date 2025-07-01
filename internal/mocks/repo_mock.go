@@ -5,10 +5,11 @@
 package mocks
 
 import (
+	context "context"
 	reflect "reflect"
-	model "github.com/stormbeaver/logistic-pack-api/internal/model"
 
 	gomock "github.com/golang/mock/gomock"
+	model "github.com/stormbeaver/logistic-pack-api/internal/model"
 )
 
 // MockEventRepo is a mock of EventRepo interface.
@@ -34,74 +35,60 @@ func (m *MockEventRepo) EXPECT() *MockEventRepoMockRecorder {
 	return m.recorder
 }
 
-// Add mocks base method.
-func (m *MockEventRepo) Add(arg0 []model.PackEvent) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Add", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Add indicates an expected call of Add.
-func (mr *MockEventRepoMockRecorder) Add(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Add", reflect.TypeOf((*MockEventRepo)(nil).Add), arg0)
-}
-
 // Lock mocks base method.
-func (m *MockEventRepo) Lock(arg0 uint64) ([]model.PackEvent, error) {
+func (m *MockEventRepo) Lock(arg0 context.Context, arg1 uint64) ([]model.PackEvent, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Lock", arg0)
+	ret := m.ctrl.Call(m, "Lock", arg0, arg1)
 	ret0, _ := ret[0].([]model.PackEvent)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Lock indicates an expected call of Lock.
-func (mr *MockEventRepoMockRecorder) Lock(arg0 interface{}) *gomock.Call {
+func (mr *MockEventRepoMockRecorder) Lock(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Lock", reflect.TypeOf((*MockEventRepo)(nil).Lock), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Lock", reflect.TypeOf((*MockEventRepo)(nil).Lock), arg0, arg1)
 }
 
 // PreProcess mocks base method.
-func (m *MockEventRepo) PreProcess(arg0 uint64) ([]model.PackEvent, error) {
+func (m *MockEventRepo) PreProcess(arg0 context.Context, arg1 uint64) ([]model.PackEvent, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PreProcess", arg0)
+	ret := m.ctrl.Call(m, "PreProcess", arg0, arg1)
 	ret0, _ := ret[0].([]model.PackEvent)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // PreProcess indicates an expected call of PreProcess.
-func (mr *MockEventRepoMockRecorder) PreProcess(arg0 interface{}) *gomock.Call {
+func (mr *MockEventRepoMockRecorder) PreProcess(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PreProcess", reflect.TypeOf((*MockEventRepo)(nil).PreProcess), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PreProcess", reflect.TypeOf((*MockEventRepo)(nil).PreProcess), arg0, arg1)
 }
 
 // Remove mocks base method.
-func (m *MockEventRepo) Remove(arg0 []uint64) error {
+func (m *MockEventRepo) Remove(arg0 context.Context, arg1 []uint64) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Remove", arg0)
+	ret := m.ctrl.Call(m, "Remove", arg0, arg1)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // Remove indicates an expected call of Remove.
-func (mr *MockEventRepoMockRecorder) Remove(arg0 interface{}) *gomock.Call {
+func (mr *MockEventRepoMockRecorder) Remove(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Remove", reflect.TypeOf((*MockEventRepo)(nil).Remove), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Remove", reflect.TypeOf((*MockEventRepo)(nil).Remove), arg0, arg1)
 }
 
 // Unlock mocks base method.
-func (m *MockEventRepo) Unlock(arg0 []uint64) error {
+func (m *MockEventRepo) Unlock(arg0 context.Context, arg1 []uint64) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Unlock", arg0)
+	ret := m.ctrl.Call(m, "Unlock", arg0, arg1)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // Unlock indicates an expected call of Unlock.
-func (mr *MockEventRepoMockRecorder) Unlock(arg0 interface{}) *gomock.Call {
+func (mr *MockEventRepoMockRecorder) Unlock(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Unlock", reflect.TypeOf((*MockEventRepo)(nil).Unlock), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Unlock", reflect.TypeOf((*MockEventRepo)(nil).Unlock), arg0, arg1)
 }

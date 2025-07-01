@@ -6,9 +6,9 @@ package mocks
 
 import (
 	reflect "reflect"
-	model "github.com/stormbeaver/logistic-pack-api/internal/model"
 
 	gomock "github.com/golang/mock/gomock"
+	model "github.com/stormbeaver/logistic-pack-api/internal/model"
 )
 
 // MockEventSender is a mock of EventSender interface.
