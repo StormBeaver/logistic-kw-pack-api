@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 	"path/filepath"
+	"time"
 
 	"gopkg.in/yaml.v3"
 )
@@ -26,14 +27,22 @@ func GetConfigInstance() Config {
 
 // Database - contains all parameters database connection.
 type Database struct {
-	Host       string `yaml:"host"`
-	Port       string `yaml:"port"`
-	User       string `yaml:"user"`
-	Password   string `yaml:"password"`
-	Migrations string `yaml:"migrations"`
-	Name       string `yaml:"name"`
-	SslMode    string `yaml:"sslmode"`
-	Driver     string `yaml:"driver"`
+	Host        string `yaml:"host"`
+	Port        string `yaml:"port"`
+	User        string `yaml:"user"`
+	Password    string `yaml:"password"`
+	Migrations  string `yaml:"migrations"`
+	Name        string `yaml:"name"`
+	SslMode     string `yaml:"sslmode"`
+	Driver      string `yaml:"driver"`
+	Connections DBCons `yaml:"connections"`
+}
+
+type DBCons struct {
+	MaxOpenCons     int           `yaml:"maxOpenCons"`
+	MaxIdleCons     int           `yaml:"maxIdleCons"`
+	ConnMaxIdleTime time.Duration `yaml:"connMaxIdleTime"`
+	ConnMaxLifeTime time.Duration `yaml:"connMaxLifeTime"`
 }
 
 // Grpc - contains parameter address grpc.
@@ -91,16 +100,26 @@ type Status struct {
 	ReadinessPath string `yaml:"readinessPath"`
 }
 
+// Retranslator config for service
+type Retranslator struct {
+	ConsumerCount uint64        `yaml:"consumerCount"`
+	BatchSize     uint64        `yaml:"batchSize"`
+	Ticker        time.Duration `yaml:"ticker"`
+	ProducerCount uint64        `yaml:"producerCount"`
+	WorkerCount   int           `yaml:"workerCount"`
+}
+
 // Config - contains all configuration parameters in config package.
 type Config struct {
-	Project  Project  `yaml:"project"`
-	Grpc     Grpc     `yaml:"grpc"`
-	Rest     Rest     `yaml:"rest"`
-	Database Database `yaml:"database"`
-	Metrics  Metrics  `yaml:"metrics"`
-	Jaeger   Jaeger   `yaml:"jaeger"`
-	Kafka    Kafka    `yaml:"kafka"`
-	Status   Status   `yaml:"status"`
+	Project      Project      `yaml:"project"`
+	Grpc         Grpc         `yaml:"grpc"`
+	Rest         Rest         `yaml:"rest"`
+	Database     Database     `yaml:"database"`
+	Metrics      Metrics      `yaml:"metrics"`
+	Jaeger       Jaeger       `yaml:"jaeger"`
+	Kafka        Kafka        `yaml:"kafka"`
+	Status       Status       `yaml:"status"`
+	Retranslator Retranslator `yaml:"retranslator"`
 }
 
 // ReadConfigYML - read configurations from file and init instance Config.
