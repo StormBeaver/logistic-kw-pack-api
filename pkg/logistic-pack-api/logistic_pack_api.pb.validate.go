@@ -111,27 +111,34 @@ var _ interface {
 	ErrorName() string
 } = PackValidationError{}
 
-// Validate checks the field values on DescribePackV1Request with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
-func (m *DescribePackV1Request) Validate() error {
+// Validate checks the field values on AddPackV1Request with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *AddPackV1Request) Validate() error {
 	if m == nil {
 		return nil
 	}
 
-	if m.GetPackId() <= 0 {
-		return DescribePackV1RequestValidationError{
-			field:  "PackId",
-			reason: "value must be greater than 0",
+	if utf8.RuneCountInString(m.GetName()) < 3 {
+		return AddPackV1RequestValidationError{
+			field:  "Name",
+			reason: "value length must be at least 3 runes",
+		}
+	}
+
+	if len(m.GetName()) > 256 {
+		return AddPackV1RequestValidationError{
+			field:  "Name",
+			reason: "value length must be at most 256 bytes",
 		}
 	}
 
 	return nil
 }
 
-// DescribePackV1RequestValidationError is the validation error returned by
-// DescribePackV1Request.Validate if the designated constraints aren't met.
-type DescribePackV1RequestValidationError struct {
+// AddPackV1RequestValidationError is the validation error returned by
+// AddPackV1Request.Validate if the designated constraints aren't met.
+type AddPackV1RequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -139,24 +146,22 @@ type DescribePackV1RequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e DescribePackV1RequestValidationError) Field() string { return e.field }
+func (e AddPackV1RequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e DescribePackV1RequestValidationError) Reason() string { return e.reason }
+func (e AddPackV1RequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e DescribePackV1RequestValidationError) Cause() error { return e.cause }
+func (e AddPackV1RequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e DescribePackV1RequestValidationError) Key() bool { return e.key }
+func (e AddPackV1RequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e DescribePackV1RequestValidationError) ErrorName() string {
-	return "DescribePackV1RequestValidationError"
-}
+func (e AddPackV1RequestValidationError) ErrorName() string { return "AddPackV1RequestValidationError" }
 
 // Error satisfies the builtin error interface
-func (e DescribePackV1RequestValidationError) Error() string {
+func (e AddPackV1RequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -168,14 +173,14 @@ func (e DescribePackV1RequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sDescribePackV1Request.%s: %s%s",
+		"invalid %sAddPackV1Request.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = DescribePackV1RequestValidationError{}
+var _ error = AddPackV1RequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -183,19 +188,160 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = DescribePackV1RequestValidationError{}
+} = AddPackV1RequestValidationError{}
 
-// Validate checks the field values on DescribePackV1Response with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
-func (m *DescribePackV1Response) Validate() error {
+// Validate checks the field values on AddPackV1Response with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *AddPackV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for PackId
+
+	return nil
+}
+
+// AddPackV1ResponseValidationError is the validation error returned by
+// AddPackV1Response.Validate if the designated constraints aren't met.
+type AddPackV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddPackV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddPackV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddPackV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddPackV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddPackV1ResponseValidationError) ErrorName() string {
+	return "AddPackV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AddPackV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddPackV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddPackV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddPackV1ResponseValidationError{}
+
+// Validate checks the field values on GetPackV1Request with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *GetPackV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if m.GetPackId() <= 0 {
+		return GetPackV1RequestValidationError{
+			field:  "PackId",
+			reason: "value must be greater than 0",
+		}
+	}
+
+	return nil
+}
+
+// GetPackV1RequestValidationError is the validation error returned by
+// GetPackV1Request.Validate if the designated constraints aren't met.
+type GetPackV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetPackV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetPackV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetPackV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetPackV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetPackV1RequestValidationError) ErrorName() string { return "GetPackV1RequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetPackV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetPackV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetPackV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetPackV1RequestValidationError{}
+
+// Validate checks the field values on GetPackV1Response with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *GetPackV1Response) Validate() error {
 	if m == nil {
 		return nil
 	}
 
 	if v, ok := interface{}(m.GetValue()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return DescribePackV1ResponseValidationError{
+			return GetPackV1ResponseValidationError{
 				field:  "Value",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -206,9 +352,9 @@ func (m *DescribePackV1Response) Validate() error {
 	return nil
 }
 
-// DescribePackV1ResponseValidationError is the validation error returned by
-// DescribePackV1Response.Validate if the designated constraints aren't met.
-type DescribePackV1ResponseValidationError struct {
+// GetPackV1ResponseValidationError is the validation error returned by
+// GetPackV1Response.Validate if the designated constraints aren't met.
+type GetPackV1ResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -216,24 +362,24 @@ type DescribePackV1ResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e DescribePackV1ResponseValidationError) Field() string { return e.field }
+func (e GetPackV1ResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e DescribePackV1ResponseValidationError) Reason() string { return e.reason }
+func (e GetPackV1ResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e DescribePackV1ResponseValidationError) Cause() error { return e.cause }
+func (e GetPackV1ResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e DescribePackV1ResponseValidationError) Key() bool { return e.key }
+func (e GetPackV1ResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e DescribePackV1ResponseValidationError) ErrorName() string {
-	return "DescribePackV1ResponseValidationError"
+func (e GetPackV1ResponseValidationError) ErrorName() string {
+	return "GetPackV1ResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e DescribePackV1ResponseValidationError) Error() string {
+func (e GetPackV1ResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -245,14 +391,14 @@ func (e DescribePackV1ResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sDescribePackV1Response.%s: %s%s",
+		"invalid %sGetPackV1Response.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = DescribePackV1ResponseValidationError{}
+var _ error = GetPackV1ResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -260,157 +406,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = DescribePackV1ResponseValidationError{}
-
-// Validate checks the field values on CreatePackV1Request with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
-func (m *CreatePackV1Request) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	if utf8.RuneCountInString(m.GetName()) < 3 {
-		return CreatePackV1RequestValidationError{
-			field:  "Name",
-			reason: "value length must be at least 3 runes",
-		}
-	}
-
-	if len(m.GetName()) > 256 {
-		return CreatePackV1RequestValidationError{
-			field:  "Name",
-			reason: "value length must be at most 256 bytes",
-		}
-	}
-
-	return nil
-}
-
-// CreatePackV1RequestValidationError is the validation error returned by
-// CreatePackV1Request.Validate if the designated constraints aren't met.
-type CreatePackV1RequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e CreatePackV1RequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e CreatePackV1RequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e CreatePackV1RequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e CreatePackV1RequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e CreatePackV1RequestValidationError) ErrorName() string {
-	return "CreatePackV1RequestValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e CreatePackV1RequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sCreatePackV1Request.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = CreatePackV1RequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = CreatePackV1RequestValidationError{}
-
-// Validate checks the field values on CreatePackV1Response with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
-func (m *CreatePackV1Response) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for PackId
-
-	return nil
-}
-
-// CreatePackV1ResponseValidationError is the validation error returned by
-// CreatePackV1Response.Validate if the designated constraints aren't met.
-type CreatePackV1ResponseValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e CreatePackV1ResponseValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e CreatePackV1ResponseValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e CreatePackV1ResponseValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e CreatePackV1ResponseValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e CreatePackV1ResponseValidationError) ErrorName() string {
-	return "CreatePackV1ResponseValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e CreatePackV1ResponseValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sCreatePackV1Response.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = CreatePackV1ResponseValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = CreatePackV1ResponseValidationError{}
+} = GetPackV1ResponseValidationError{}
 
 // Validate checks the field values on ListPackV1Request with the rules defined
 // in the proto definition for this message. If any rules are violated, an
@@ -418,6 +414,20 @@ var _ interface {
 func (m *ListPackV1Request) Validate() error {
 	if m == nil {
 		return nil
+	}
+
+	if m.GetCursor() <= 0 {
+		return ListPackV1RequestValidationError{
+			field:  "Cursor",
+			reason: "value must be greater than 0",
+		}
+	}
+
+	if m.GetLimit() <= 0 {
+		return ListPackV1RequestValidationError{
+			field:  "Limit",
+			reason: "value must be greater than 0",
+		}
 	}
 
 	return nil

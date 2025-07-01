@@ -18,10 +18,10 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LogisticPackApiServiceClient interface {
-	// DescribePackV1 - Describe a pack
-	DescribePackV1(ctx context.Context, in *DescribePackV1Request, opts ...grpc.CallOption) (*DescribePackV1Response, error)
+	// GetPackV1 - Describe a pack
+	GetPackV1(ctx context.Context, in *GetPackV1Request, opts ...grpc.CallOption) (*GetPackV1Response, error)
 	//CreatePackv1 - Create a new pack
-	CreatePackV1(ctx context.Context, in *CreatePackV1Request, opts ...grpc.CallOption) (*CreatePackV1Response, error)
+	AddPackV1(ctx context.Context, in *AddPackV1Request, opts ...grpc.CallOption) (*AddPackV1Response, error)
 	//ListPackv1 - list all packs
 	ListPackV1(ctx context.Context, in *ListPackV1Request, opts ...grpc.CallOption) (*ListPackV1Response, error)
 	//RemovePackV1 - remove a pack
@@ -36,18 +36,18 @@ func NewLogisticPackApiServiceClient(cc grpc.ClientConnInterface) LogisticPackAp
 	return &logisticPackApiServiceClient{cc}
 }
 
-func (c *logisticPackApiServiceClient) DescribePackV1(ctx context.Context, in *DescribePackV1Request, opts ...grpc.CallOption) (*DescribePackV1Response, error) {
-	out := new(DescribePackV1Response)
-	err := c.cc.Invoke(ctx, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/DescribePackV1", in, out, opts...)
+func (c *logisticPackApiServiceClient) GetPackV1(ctx context.Context, in *GetPackV1Request, opts ...grpc.CallOption) (*GetPackV1Response, error) {
+	out := new(GetPackV1Response)
+	err := c.cc.Invoke(ctx, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/GetPackV1", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *logisticPackApiServiceClient) CreatePackV1(ctx context.Context, in *CreatePackV1Request, opts ...grpc.CallOption) (*CreatePackV1Response, error) {
-	out := new(CreatePackV1Response)
-	err := c.cc.Invoke(ctx, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/CreatePackV1", in, out, opts...)
+func (c *logisticPackApiServiceClient) AddPackV1(ctx context.Context, in *AddPackV1Request, opts ...grpc.CallOption) (*AddPackV1Response, error) {
+	out := new(AddPackV1Response)
+	err := c.cc.Invoke(ctx, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/AddPackV1", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -76,10 +76,10 @@ func (c *logisticPackApiServiceClient) RemovePackV1(ctx context.Context, in *Rem
 // All implementations must embed UnimplementedLogisticPackApiServiceServer
 // for forward compatibility
 type LogisticPackApiServiceServer interface {
-	// DescribePackV1 - Describe a pack
-	DescribePackV1(context.Context, *DescribePackV1Request) (*DescribePackV1Response, error)
+	// GetPackV1 - Describe a pack
+	GetPackV1(context.Context, *GetPackV1Request) (*GetPackV1Response, error)
 	//CreatePackv1 - Create a new pack
-	CreatePackV1(context.Context, *CreatePackV1Request) (*CreatePackV1Response, error)
+	AddPackV1(context.Context, *AddPackV1Request) (*AddPackV1Response, error)
 	//ListPackv1 - list all packs
 	ListPackV1(context.Context, *ListPackV1Request) (*ListPackV1Response, error)
 	//RemovePackV1 - remove a pack
@@ -91,11 +91,11 @@ type LogisticPackApiServiceServer interface {
 type UnimplementedLogisticPackApiServiceServer struct {
 }
 
-func (UnimplementedLogisticPackApiServiceServer) DescribePackV1(context.Context, *DescribePackV1Request) (*DescribePackV1Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DescribePackV1 not implemented")
+func (UnimplementedLogisticPackApiServiceServer) GetPackV1(context.Context, *GetPackV1Request) (*GetPackV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPackV1 not implemented")
 }
-func (UnimplementedLogisticPackApiServiceServer) CreatePackV1(context.Context, *CreatePackV1Request) (*CreatePackV1Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreatePackV1 not implemented")
+func (UnimplementedLogisticPackApiServiceServer) AddPackV1(context.Context, *AddPackV1Request) (*AddPackV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddPackV1 not implemented")
 }
 func (UnimplementedLogisticPackApiServiceServer) ListPackV1(context.Context, *ListPackV1Request) (*ListPackV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPackV1 not implemented")
@@ -117,38 +117,38 @@ func RegisterLogisticPackApiServiceServer(s grpc.ServiceRegistrar, srv LogisticP
 	s.RegisterService(&LogisticPackApiService_ServiceDesc, srv)
 }
 
-func _LogisticPackApiService_DescribePackV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DescribePackV1Request)
+func _LogisticPackApiService_GetPackV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPackV1Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LogisticPackApiServiceServer).DescribePackV1(ctx, in)
+		return srv.(LogisticPackApiServiceServer).GetPackV1(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/DescribePackV1",
+		FullMethod: "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/GetPackV1",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LogisticPackApiServiceServer).DescribePackV1(ctx, req.(*DescribePackV1Request))
+		return srv.(LogisticPackApiServiceServer).GetPackV1(ctx, req.(*GetPackV1Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LogisticPackApiService_CreatePackV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreatePackV1Request)
+func _LogisticPackApiService_AddPackV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddPackV1Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LogisticPackApiServiceServer).CreatePackV1(ctx, in)
+		return srv.(LogisticPackApiServiceServer).AddPackV1(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/CreatePackV1",
+		FullMethod: "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/AddPackV1",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LogisticPackApiServiceServer).CreatePackV1(ctx, req.(*CreatePackV1Request))
+		return srv.(LogisticPackApiServiceServer).AddPackV1(ctx, req.(*AddPackV1Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -197,12 +197,12 @@ var LogisticPackApiService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*LogisticPackApiServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "DescribePackV1",
-			Handler:    _LogisticPackApiService_DescribePackV1_Handler,
+			MethodName: "GetPackV1",
+			Handler:    _LogisticPackApiService_GetPackV1_Handler,
 		},
 		{
-			MethodName: "CreatePackV1",
-			Handler:    _LogisticPackApiService_CreatePackV1_Handler,
+			MethodName: "AddPackV1",
+			Handler:    _LogisticPackApiService_AddPackV1_Handler,
 		},
 		{
 			MethodName: "ListPackV1",
