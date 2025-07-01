@@ -1,6 +1,7 @@
 package producer
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"sync/atomic"
@@ -47,6 +48,7 @@ var (
 		{ID: 5},
 		{ID: 6},
 	}
+	ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
 )
 
 func TestProducerStart(t *testing.T) {
@@ -62,8 +64,8 @@ func TestProducerStart(t *testing.T) {
 	defer ctrl.Finish()
 
 	sender.EXPECT().Send(mtchr).Return(nil).Times(6)
-	repo.EXPECT().Remove(gomock.InAnyOrder([]uint64{1, 2, 3, 4, 5, 6})).Return(err)
-	repo.EXPECT().Unlock(gomock.InAnyOrder([]uint64{1, 2, 3, 4, 5, 6})).Return(err)
+	repo.EXPECT().Remove(ctx, gomock.InAnyOrder([]uint64{1, 2, 3, 4, 5, 6})).Return(err)
+	repo.EXPECT().Unlock(ctx, gomock.InAnyOrder([]uint64{1, 2, 3, 4, 5, 6})).Return(err)
 
 	p := NewKafkaProducer(
 		2,
@@ -97,7 +99,7 @@ func TestProducerStartWithErr(t *testing.T) {
 	defer ctrl.Finish()
 
 	sender.EXPECT().Send(mtchr2).Return(err).Times(len(slc))
-	repo.EXPECT().Unlock(gomock.InAnyOrder([]uint64{1, 2, 3, 4, 5, 6}))
+	repo.EXPECT().Unlock(ctx, gomock.InAnyOrder([]uint64{1, 2, 3, 4, 5, 6}))
 
 	p := NewKafkaProducer(
 		2,
