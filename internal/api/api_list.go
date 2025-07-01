@@ -8,6 +8,7 @@ import (
 	pb "github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-api"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // ListPackv1 - list all packs
@@ -16,7 +17,7 @@ func (o *packAPI) ListPackV1(
 	req *pb.ListPackV1Request,
 ) (*pb.ListPackV1Response, error) {
 
-	pack, err := o.repo.ListPacks(ctx)
+	pack, err := o.repo.List(ctx, req.GetCursor(), req.GetLimit())
 	if err != nil {
 		log.Error().Err(err).Msg("ListPackV1 -- failed")
 
@@ -40,7 +41,11 @@ func (o *packAPI) ListPackV1(
 func convertPackList(pack []*model.Pack) []*pb.Pack {
 	result := make([]*pb.Pack, 0, len(pack))
 	for _, v := range pack {
-		result = append(result, &pb.Pack{Id: v.ID, Name: v.Name})
+		result = append(result, &pb.Pack{
+			Id:      v.ID,
+			Name:    v.Name,
+			Created: timestamppb.New(v.Created),
+		})
 	}
 	return result
 }
