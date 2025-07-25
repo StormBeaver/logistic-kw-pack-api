@@ -22,7 +22,7 @@ func (e eventRepo) Lock(ctx context.Context, count uint64) ([]model.PackEvent, e
 	}
 	defer tx.Rollback()
 
-	_, err = AcquireLockTx(ctx, tx)
+	err = AcquireLockTx(ctx, tx)
 
 	if err != nil {
 		return nil, fmt.Errorf("try lock Lock: %w", err)

@@ -9,7 +9,7 @@ import (
 )
 
 func (e eventRepo) PreProcess(ctx context.Context, count uint64) ([]model.PackEvent, error) {
-	_, err := AcquireLock(ctx, e.db)
+	err := AcquireLock(ctx, e.db)
 
 	if err != nil {
 		return nil, fmt.Errorf("try lock PreProcess: %w", err)
@@ -34,10 +34,5 @@ func (e eventRepo) PreProcess(ctx context.Context, count uint64) ([]model.PackEv
 		return nil, fmt.Errorf("exec query in Lock: %w", err)
 	}
 
-	_, err = Unlock(ctx, e.db)
-	if err != nil {
-		return events, fmt.Errorf("pg_advisory_unlock: %w", err)
-	}
-
-	return events, nil
+	return events, Unlock(ctx, e.db)
 }
