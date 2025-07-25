@@ -9,13 +9,10 @@ import (
 )
 
 func (e eventRepo) PreProcess(ctx context.Context, count uint64) ([]model.PackEvent, error) {
-	ok, err := AcquireTryLock(ctx, e.db, "dbLock")
+	_, err := AcquireLock(ctx, e.db)
 
 	if err != nil {
 		return nil, fmt.Errorf("try lock PreProcess: %w", err)
-	}
-	if !ok {
-		return nil, nil
 	}
 
 	sQuery := sq.Select("id", "type", "lock", "payload").
@@ -35,6 +32,11 @@ func (e eventRepo) PreProcess(ctx context.Context, count uint64) ([]model.PackEv
 	err = e.db.SelectContext(ctx, &events, sql, args...)
 	if err != nil {
 		return nil, fmt.Errorf("exec query in Lock: %w", err)
+	}
+
+	_, err = Unlock(ctx, e.db)
+	if err != nil {
+		return events, fmt.Errorf("pg_advisory_unlock: %w", err)
 	}
 
 	return events, nil

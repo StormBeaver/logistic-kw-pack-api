@@ -22,13 +22,10 @@ func (e eventRepo) Lock(ctx context.Context, count uint64) ([]model.PackEvent, e
 	}
 	defer tx.Rollback()
 
-	ok, err := AcquireTryLockTx(ctx, tx, "txLock")
+	_, err = AcquireLockTx(ctx, tx)
 
 	if err != nil {
 		return nil, fmt.Errorf("try lock Lock: %w", err)
-	}
-	if !ok {
-		return nil, nil
 	}
 
 	sQuery := sq.Select("id", "type", "lock", "payload").
