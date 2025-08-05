@@ -6,11 +6,11 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
-    logging:
-      driver: 'gelf'
-      options:
-        gelf-address: 'udp://localhost:12201'
-        tag: logistic-pack-api
+    # logging:
+    #   driver: 'gelf'
+    #   options:
+    #     gelf-address: 'udp://localhost:12201'
+    #     tag: logistic-pack-api
     networks:
       - logisticnw
     depends_on:
@@ -43,11 +43,11 @@ services:
       interval: 10s
       retries: 10
     restart: always
-    logging:
-      driver: 'gelf'
-      options:
-        gelf-address: 'udp://localhost:12201'
-        tag: postgres
+    # logging:
+    #   driver: 'gelf'
+    #   options:
+    #     gelf-address: 'udp://localhost:12201'
+    #     tag: postgres
     ports:
       - 5432:5432
     environment:
@@ -65,11 +65,11 @@ services:
   zookeeper:
     image: confluentinc/cp-zookeeper
     restart: unless-stopped
-    logging:
-      driver: 'gelf'
-      options:
-        gelf-address: 'udp://localhost:12201'
-        tag: zookeeper
+    # logging:
+    #   driver: 'gelf'
+    #   options:
+    #     gelf-address: 'udp://localhost:12201'
+    #     tag: zookeeper
     ports:
       - 2181:2181
     environment:
@@ -83,11 +83,11 @@ services:
   kafka:
     image: confluentinc/cp-kafka
     restart: unless-stopped
-    logging:
-      driver: 'gelf'
-      options:
-        gelf-address: 'udp://localhost:12201'
-        tag: kafka
+    # logging:
+    #   driver: 'gelf'
+    #   options:
+    #     gelf-address: 'udp://localhost:12201'
+    #     tag: kafka
     depends_on:
       - zookeeper
     ports:
@@ -125,7 +125,7 @@ services:
     volumes:
       - ./swagger:/swagger
     environment:
-      SWAGGER_JSON: /swagger/stormbeaver/logistic_pack_api/v1/logistic_pack_api.swaggser.json
+      SWAGGER_FILE: /swagger/logisticPack/logistic_pack_api/v1/logistic_pack_api.swaggser.json/logistic_pack_api.swaggser.json #SWAGGER_JSON: in past
     depends_on:
       - logistic-pack-api
     networks:
@@ -134,11 +134,11 @@ services:
   jaeger:
     image: jaegertracing/all-in-one
     restart: unless-stopped
-    logging:
-      driver: 'gelf'
-      options:
-        gelf-address: 'udp://localhost:12201'
-        tag: jaeger
+    # logging:
+    #   driver: 'gelf'
+    #   options:
+    #     gelf-address: 'udp://localhost:12201'
+    #     tag: jaeger
     ports:
       - 6831:6831/udp
       - 16686:16686
@@ -148,11 +148,11 @@ services:
   prometheus:
     image: prom/prometheus:latest
     restart: unless-stopped
-    logging:
-      driver: 'gelf'
-      options:
-        gelf-address: 'udp://localhost:12201'
-        tag: prometheus
+    # logging:
+    #   driver: 'gelf'
+    #   options:
+    #     gelf-address: 'udp://localhost:12201'
+    #     tag: prometheus
     ports:
       - 9090:9090
     networks:
@@ -175,65 +175,65 @@ services:
     volumes:
       - "./data/grafana:/var/lib/grafana"
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
-    environment:
-      - http.host=0.0.0.0
-      - transport.host=localhost
-      - network.host=0.0.0.0
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    deploy:
-      resources:
-        limits:
-          memory: 1g
-    networks:
-      - logisticnw
-    volumes:
-      - esdata:/usr/share/elasticsearch/data
+  # elasticsearch:
+  #   image: localhost:5000/elasticsearch #changed
+  #   environment:
+  #     - http.host=0.0.0.0
+  #     - transport.host=localhost
+  #     - network.host=0.0.0.0
+  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 1g
+  #   networks:
+  #     - logisticnw
+  #   volumes:
+  #     - esdata:/usr/share/elasticsearch/data
   # Elasticsearch: https://www.elastic.co/guide/en/elasticsearch/reference/6.x/docker.html
 
-  mongo:
-    image: mongo:4.2
-    restart: always
-    networks:
-      - logisticnw
-    volumes:
-      - mongodata:/data/db
+  # mongo:
+  #   image: mongo:8 #changed
+  #   restart: always
+  #   networks:
+  #     - logisticnw
+  #   volumes:
+  #     - mongodata:/data/db
 
   # Graylog: https://hub.docker.com/r/graylog/graylog/
-  graylog:
-    image: graylog/graylog:4.0
-    environment:
-      # CHANGE ME (must be at least 16 characters)!
-      - GRAYLOG_PASSWORD_SECRET=somepasswordpepper
-      # Password: admin
-      - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
-      - GRAYLOG_HTTP_EXTERNAL_URI=http://127.0.0.1:9000/
-    entrypoint: /usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh
-    networks:
-      - logisticnw
-    links:
-      - mongo
-      - elasticsearch
-    depends_on:
-      - mongo
-      - elasticsearch
-    ports:
-      # Graylog web interface and REST API
-      - 9000:9000
-      # Syslog TCP
-      - 1514:1514
-      # Syslog UDP
-      - 1514:1514/udp
-      # GELF TCP
-      - 12201:12201
-      # GELF UDP
-      - 12201:12201/udp
-    restart: always
+  # graylog:
+  #   image: graylog/graylog:6.3 #changed
+  #   environment:
+  #     # CHANGE ME (must be at least 16 characters)!
+  #     - GRAYLOG_PASSWORD_SECRET=somepasswordpepper
+  #     # Password: admin
+  #     - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+  #     - GRAYLOG_HTTP_EXTERNAL_URI=http://127.0.0.1:9000/
+  #   entrypoint: /usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh
+  #   networks:
+  #     - logisticnw
+  #   links:
+  #     - mongo
+  #     - elasticsearch
+  #   depends_on:
+  #     - mongo
+  #     - elasticsearch
+  #   ports:
+  #     # Graylog web interface and REST API
+  #     - 9000:9000
+  #     # Syslog TCP
+  #     - 1514:1514
+  #     # Syslog UDP
+  #     - 1514:1514/udp
+  #     # GELF TCP
+  #     - 12201:12201
+  #     # GELF UDP
+  #     - 12201:12201/udp
+  #   restart: always
 
 volumes:
   pgdata:

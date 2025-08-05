@@ -21,7 +21,7 @@ metrics:
 
 jaeger:
   service: "logistic-pack-api"
-  host: "jaeger"
+  host: localhost
   port: ":6831"
 
 status:

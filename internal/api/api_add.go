@@ -3,7 +3,6 @@ package api
 import (
 	"context"
 
-	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
@@ -16,27 +15,32 @@ func (o *packAPI) AddPackV1(
 	req *pb.AddPackV1Request,
 ) (*pb.AddPackV1Response, error) {
 
+	logger, err := checkLogLevel(ctx, o.logger)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
 	if err := req.Validate(); err != nil {
-		log.Error().Err(err).Msg("AddPackV1 - invalid argument")
+		logger.Error().Err(err).Msg("AddPackV1 - invalid argument")
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
 	packId, err := o.repo.Add(ctx, req.GetName())
 	if err != nil {
-		log.Error().Err(err).Msg("AddPackV1 -- failed")
+		logger.Error().Err(err).Msg("AddPackV1 -- failed")
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
 	if packId == 0 {
-		log.Debug().Str("packName", req.GetName()).Msg("pack don't create")
-		totalPackNotFound.Inc()
+		logger.Debug().Str("packName", req.GetName()).Msg("don't create")
 
 		return nil, status.Error(codes.NotFound, "pack don't create")
 	}
 
-	log.Debug().Msg("CreatePackV1 - success")
+	logger.Debug().Msg("CreatePackV1 - success")
+	totalPackCUDEvents.Inc()
 
 	return &pb.AddPackV1Response{
 		PackId: packId,

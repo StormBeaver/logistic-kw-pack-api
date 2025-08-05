@@ -3,7 +3,6 @@ package api
 import (
 	"context"
 
-	"github.com/rs/zerolog/log"
 	"github.com/stormbeaver/logistic-pack-api/internal/model"
 	pb "github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-api"
 	"google.golang.org/grpc/codes"
@@ -17,21 +16,32 @@ func (o *packAPI) ListPackV1(
 	req *pb.ListPackV1Request,
 ) (*pb.ListPackV1Response, error) {
 
+	logger, err := checkLogLevel(ctx, o.logger)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	if err := req.Validate(); err != nil {
+		logger.Error().Err(err).Msg("ListPackV1 - invalid arguments")
+
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
 	pack, err := o.repo.List(ctx, req.GetCursor(), req.GetLimit())
 	if err != nil {
-		log.Error().Err(err).Msg("ListPackV1 -- failed")
+		logger.Error().Err(err).Msg("ListPackV1 -- failed")
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
 	if pack == nil {
-		log.Debug().Str("packs", "list").Msg("packs not found")
+		logger.Debug().Str("packs", "list").Msg("packs not found")
 		totalPackNotFound.Inc()
 
 		return nil, status.Error(codes.NotFound, "packs not found")
 	}
 
-	log.Debug().Msg("ListPackV1 - success")
+	logger.Debug().Msg("ListPackV1 - success")
 
 	return &pb.ListPackV1Response{
 		Items: convertPackList(pack),

@@ -13,7 +13,7 @@ import (
 	"time"
 
 	"github.com/jmoiron/sqlx"
-	"github.com/rs/zerolog/log"
+	"github.com/rs/zerolog"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
 	"google.golang.org/grpc/reflection"
@@ -46,7 +46,7 @@ func NewGrpcServer(db *sqlx.DB, batchSize uint) *GrpcServer {
 }
 
 // Start method runs server
-func (s *GrpcServer) Start(cfg *config.Config) error {
+func (s *GrpcServer) Start(cfg *config.Config, logger zerolog.Logger) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
@@ -57,9 +57,9 @@ func (s *GrpcServer) Start(cfg *config.Config) error {
 	gatewayServer := createGatewayServer(grpcAddr, gatewayAddr)
 
 	go func() {
-		log.Info().Msgf("Gateway server is running on %s", gatewayAddr)
+		logger.Info().Msgf("Gateway server is running on %s", gatewayAddr)
 		if err := gatewayServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-			log.Error().Err(err).Msg("Failed running gateway server")
+			logger.Error().Err(err).Msg("Failed running gateway server")
 			cancel()
 		}
 	}()
@@ -67,9 +67,9 @@ func (s *GrpcServer) Start(cfg *config.Config) error {
 	metricsServer := createMetricsServer(cfg)
 
 	go func() {
-		log.Info().Msgf("Metrics server is running on %s", metricsAddr)
+		logger.Info().Msgf("Metrics server is running on %s", metricsAddr)
 		if err := metricsServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-			log.Error().Err(err).Msg("Failed running metrics server")
+			logger.Error().Err(err).Msg("Failed running metrics server")
 			cancel()
 		}
 	}()
@@ -81,9 +81,9 @@ func (s *GrpcServer) Start(cfg *config.Config) error {
 
 	go func() {
 		statusAdrr := fmt.Sprintf("%s:%v", cfg.Status.Host, cfg.Status.Port)
-		log.Info().Msgf("Status server is running on %s", statusAdrr)
+		logger.Info().Msgf("Status server is running on %s", statusAdrr)
 		if err := statusServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-			log.Error().Err(err).Msg("Failed running status server")
+			logger.Error().Err(err).Msg("Failed running status server")
 		}
 	}()
 
@@ -110,21 +110,21 @@ func (s *GrpcServer) Start(cfg *config.Config) error {
 
 	r := repo.NewRepo(s.db, s.batchSize)
 
-	pb.RegisterLogisticPackApiServiceServer(grpcServer, api.NewPackAPI(r))
+	pb.RegisterLogisticPackApiServiceServer(grpcServer, api.NewPackAPI(r, logger))
 	grpc_prometheus.EnableHandlingTimeHistogram()
 	grpc_prometheus.Register(grpcServer)
 
 	go func() {
-		log.Info().Msgf("GRPC Server is listening on: %s", grpcAddr)
+		logger.Info().Msgf("GRPC Server is listening on: %s", grpcAddr)
 		if err := grpcServer.Serve(l); err != nil {
-			log.Fatal().Err(err).Msg("Failed running gRPC server")
+			logger.Fatal().Err(err).Msg("Failed running gRPC server")
 		}
 	}()
 
 	go func() {
 		time.Sleep(2 * time.Second)
 		isReady.Store(true)
-		log.Info().Msg("The service is ready to accept requests")
+		logger.Info().Msg("The service is ready to accept requests")
 	}()
 
 	if cfg.Project.Debug {
@@ -136,33 +136,33 @@ func (s *GrpcServer) Start(cfg *config.Config) error {
 
 	select {
 	case v := <-quit:
-		log.Info().Msgf("signal.Notify: %v", v)
+		logger.Info().Msgf("signal.Notify: %v", v)
 	case done := <-ctx.Done():
-		log.Info().Msgf("ctx.Done: %v", done)
+		logger.Info().Msgf("ctx.Done: %v", done)
 	}
 
 	isReady.Store(false)
 
 	if err := gatewayServer.Shutdown(ctx); err != nil {
-		log.Error().Err(err).Msg("gatewayServer.Shutdown")
+		logger.Error().Err(err).Msg("gatewayServer.Shutdown")
 	} else {
-		log.Info().Msg("gatewayServer shut down correctly")
+		logger.Info().Msg("gatewayServer shut down correctly")
 	}
 
 	if err := statusServer.Shutdown(ctx); err != nil {
-		log.Error().Err(err).Msg("statusServer.Shutdown")
+		logger.Error().Err(err).Msg("statusServer.Shutdown")
 	} else {
-		log.Info().Msg("statusServer shut down correctly")
+		logger.Info().Msg("statusServer shut down correctly")
 	}
 
 	if err := metricsServer.Shutdown(ctx); err != nil {
-		log.Error().Err(err).Msg("metricsServer.Shutdown")
+		logger.Error().Err(err).Msg("metricsServer.Shutdown")
 	} else {
-		log.Info().Msg("metricsServer shut down correctly")
+		logger.Info().Msg("metricsServer shut down correctly")
 	}
 
 	grpcServer.GracefulStop()
-	log.Info().Msgf("grpcServer shut down correctly")
+	logger.Info().Msgf("grpcServer shut down correctly")
 
 	return nil
 }

@@ -3,7 +3,6 @@ package api
 import (
 	"context"
 
-	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
@@ -16,27 +15,33 @@ func (o *packAPI) RemovePackV1(
 	req *pb.RemovePackV1Request,
 ) (*pb.RemovePackV1Response, error) {
 
+	logger, err := checkLogLevel(ctx, o.logger)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
 	if err := req.Validate(); err != nil {
-		log.Error().Err(err).Msg("RemovePackV1 - invalid argument")
+		logger.Error().Err(err).Msg("RemovePackV1 - invalid argument")
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
 	deleted, err := o.repo.Remove(ctx, req.GetPackId())
 	if err != nil {
-		log.Error().Err(err).Msg("RemovePackV1 -- failed")
+		logger.Error().Err(err).Msg("RemovePackV1 -- failed")
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
 	if !deleted {
-		log.Debug().Uint64("packId", req.GetPackId()).Msg("pack not found")
+		logger.Debug().Uint64("packId", req.GetPackId()).Msg("pack not found")
 		totalPackNotFound.Inc()
 
 		return nil, status.Error(codes.NotFound, "pack not found")
 	}
 
-	log.Debug().Msg("RemovePackV1 - success")
+	logger.Debug().Msg("RemovePackV1 - success")
+	totalPackCUDEvents.Inc()
 
 	return &pb.RemovePackV1Response{
 		Found: true,

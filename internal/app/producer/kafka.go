@@ -73,12 +73,10 @@ func (p *producer) Start() {
 			for {
 				select {
 				case event := <-p.events:
-					if event.Type == "created" {
-						if err := p.sender.Send(&event); err != nil { //  TODO: compare by event.ID and event.Pack.Id for processing more than 1 type of event
-							toUnlock = append(toUnlock, event.ID)
-						} else {
-							toRemove = append(toRemove, event.ID)
-						}
+					if err := p.sender.Send(&event); err != nil { //  TODO: compare by event.ID and event.Pack.Id for processing more than 1 type of event
+						toUnlock = append(toUnlock, event.ID)
+					} else {
+						toRemove = append(toRemove, event.ID)
 					}
 				case <-ticker.C:
 					p.delivery(toRemove, toUnlock)

@@ -4,7 +4,7 @@ import (
 	"io"
 
 	"github.com/opentracing/opentracing-go"
-	"github.com/rs/zerolog/log"
+	"github.com/rs/zerolog"
 	"github.com/uber/jaeger-client-go"
 
 	"github.com/stormbeaver/logistic-pack-api/internal/config"
@@ -13,7 +13,7 @@ import (
 )
 
 // NewTracer - returns new tracer.
-func NewTracer(cfg *config.Config) (io.Closer, error) {
+func NewTracer(cfg *config.Config, logger zerolog.Logger) (io.Closer, error) {
 	cfgTracer := &jaegercfg.Configuration{
 		ServiceName: cfg.Jaeger.Service,
 		Sampler: &jaegercfg.SamplerConfig{
@@ -25,14 +25,16 @@ func NewTracer(cfg *config.Config) (io.Closer, error) {
 			LocalAgentHostPort: cfg.Jaeger.Host + cfg.Jaeger.Port,
 		},
 	}
+
 	tracer, closer, err := cfgTracer.NewTracer(jaegercfg.Logger(jaeger.StdLogger))
 	if err != nil {
-		log.Err(err).Msgf("failed init jaeger: %v", err)
+		logger.Err(err).Msgf("failed init jaeger: %v", err)
 
 		return nil, err
 	}
+
 	opentracing.SetGlobalTracer(tracer)
-	log.Info().Msgf("Traces started")
+	logger.Info().Msgf("Traces started")
 
 	return closer, nil
 }

@@ -25,12 +25,14 @@ import (
 
 var (
 	batchSize uint = 2
+	logger    zerolog.Logger
 )
 
 func main() {
 	if err := config.ReadConfigYML("config.yml"); err != nil {
 		log.Fatal().Err(err).Msg("Failed init configuration")
 	}
+
 	cfg := config.GetConfigInstance()
 
 	migration := flag.Bool("migration", true, "Defines the migration start option")
@@ -44,9 +46,9 @@ func main() {
 		Msgf("Starting service: %s", cfg.Project.Name)
 
 	if cfg.Project.Debug {
-		zerolog.SetGlobalLevel(zerolog.DebugLevel)
+		logger = log.Level(zerolog.DebugLevel)
 	} else {
-		zerolog.SetGlobalLevel(zerolog.InfoLevel)
+		logger = log.Level(zerolog.InfoLevel)
 	}
 
 	dsn := fmt.Sprintf("host=%v port=%v user=%v password=%v dbname=%v sslmode=%v",
@@ -63,28 +65,28 @@ func main() {
 
 	db, err := database.NewPostgres(initCtx, dsn, cfg.Database.Driver, &cfg.Database.Connections)
 	if err != nil {
-		log.Fatal().Err(err).Msg("Failed init postgres")
+		logger.Fatal().Err(err).Msg("Failed init postgres")
 	}
 	defer db.Close()
 
 	if *migration {
 		if err = goose.Up(db.DB, cfg.Database.Migrations); err != nil {
-			log.Error().Err(err).Msg("Migration failed")
+			logger.Error().Err(err).Msg("Migration failed")
 
 			return
 		}
 	}
 
-	tracing, err := tracer.NewTracer(&cfg)
+	tracing, err := tracer.NewTracer(&cfg, logger)
 	if err != nil {
-		log.Error().Err(err).Msg("Failed init tracing")
+		logger.Error().Err(err).Msg("Failed init tracing")
 
 		return
 	}
 	defer tracing.Close()
 
-	if err := server.NewGrpcServer(db, batchSize).Start(&cfg); err != nil {
-		log.Error().Err(err).Msg("Failed creating gRPC server")
+	if err := server.NewGrpcServer(db, batchSize).Start(&cfg, logger); err != nil {
+		logger.Error().Err(err).Msg("Failed creating gRPC server")
 
 		return
 	}
