@@ -132,7 +132,7 @@ services:
       - logisticnw
 
   jaeger:
-    image: jaegertracing/all-in-one
+    image: jaegertracing/all-in-one:1.49
     restart: unless-stopped
     # logging:
     #   driver: 'gelf'
