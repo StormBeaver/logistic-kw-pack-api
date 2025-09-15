@@ -10,13 +10,6 @@ option go_package = "github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-
 
 // LogisticPackApiService - Service for working with packs
 service LogisticPackApiService {
-  // GetPackV1 - Describe a pack
-  rpc GetPackV1(GetPackV1Request) returns (GetPackV1Response) {
-    option (google.api.http) = {
-      get: "/v1/packs/{pack_id}"
-    };
-  }
-
   //CreatePackv1 - Create a new pack
   rpc AddPackV1(AddPackV1Request) returns (AddPackV1Response) {
        option (google.api.http) = {
@@ -24,10 +17,24 @@ service LogisticPackApiService {
     };
   }
 
+  // GetPackV1 - Describe a pack
+  rpc GetPackV1(GetPackV1Request) returns (GetPackV1Response) {
+    option (google.api.http) = {
+      get: "/v1/packs/{pack_id}"
+    };
+  }
+
   //ListPackv1 - list all packs
   rpc ListPackV1(ListPackV1Request) returns (ListPackV1Response) {
        option (google.api.http) = {
       get: "/v1/packs/{cursor}/{limit}"
+    };
+  }
+
+  //UpdatePackV1 - update already existing pack
+  rpc UpdatePackV1(UpdatePackRequest) returns (UpdatePackResponse) {
+       option (google.api.http) = {
+      put: "/v1/packs/update/{pack_id}"
     };
   }
 
@@ -59,6 +66,15 @@ message GetPackV1Request {
 
 message GetPackV1Response {
   Pack value = 1;
+}
+
+message UpdatePackRequest {
+  uint64 pack_id = 1 [(validate.rules).uint64.gt = 0];
+  string name = 2 [(validate.rules).string = {min_len: 3, max_bytes:256}];
+}
+
+message UpdatePackResponse {
+  bool found = 1;
 }
 
 message ListPackV1Request {

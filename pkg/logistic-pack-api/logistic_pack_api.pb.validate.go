@@ -408,6 +408,163 @@ var _ interface {
 	ErrorName() string
 } = GetPackV1ResponseValidationError{}
 
+// Validate checks the field values on UpdatePackRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *UpdatePackRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if m.GetPackId() <= 0 {
+		return UpdatePackRequestValidationError{
+			field:  "PackId",
+			reason: "value must be greater than 0",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetName()) < 3 {
+		return UpdatePackRequestValidationError{
+			field:  "Name",
+			reason: "value length must be at least 3 runes",
+		}
+	}
+
+	if len(m.GetName()) > 256 {
+		return UpdatePackRequestValidationError{
+			field:  "Name",
+			reason: "value length must be at most 256 bytes",
+		}
+	}
+
+	return nil
+}
+
+// UpdatePackRequestValidationError is the validation error returned by
+// UpdatePackRequest.Validate if the designated constraints aren't met.
+type UpdatePackRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdatePackRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdatePackRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdatePackRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdatePackRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdatePackRequestValidationError) ErrorName() string {
+	return "UpdatePackRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdatePackRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdatePackRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdatePackRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdatePackRequestValidationError{}
+
+// Validate checks the field values on UpdatePackResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *UpdatePackResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Found
+
+	return nil
+}
+
+// UpdatePackResponseValidationError is the validation error returned by
+// UpdatePackResponse.Validate if the designated constraints aren't met.
+type UpdatePackResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdatePackResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdatePackResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdatePackResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdatePackResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdatePackResponseValidationError) ErrorName() string {
+	return "UpdatePackResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdatePackResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdatePackResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdatePackResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdatePackResponseValidationError{}
+
 // Validate checks the field values on ListPackV1Request with the rules defined
 // in the proto definition for this message. If any rules are violated, an
 // error is returned.
