@@ -9,6 +9,7 @@ import (
 )
 
 func (e eventRepo) PreProcess(ctx context.Context, count uint64) ([]model.PackEvent, error) {
+
 	err := AcquireLock(ctx, e.db)
 
 	if err != nil {
@@ -27,12 +28,17 @@ func (e eventRepo) PreProcess(ctx context.Context, count uint64) ([]model.PackEv
 		return nil, fmt.Errorf("convert to sql: %w", err)
 	}
 
-	events := make([]model.PackEvent, 0, count)
+	events := make([]RepoPackEvent, 0, count)
 
 	err = e.db.SelectContext(ctx, &events, sql, args...)
 	if err != nil {
 		return nil, fmt.Errorf("exec query in Lock: %w", err)
 	}
 
-	return events, Unlock(ctx, e.db)
+	parsedEvents, err := parsePackEvent(events)
+	if err != nil {
+		return nil, fmt.Errorf("parse events: %w", err)
+	}
+
+	return parsedEvents, Unlock(ctx, e.db)
 }

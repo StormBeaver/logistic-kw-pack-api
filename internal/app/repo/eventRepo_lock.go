@@ -2,7 +2,6 @@ package repo
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 	"time"
 
@@ -11,12 +10,13 @@ import (
 )
 
 func (e eventRepo) Lock(ctx context.Context, count uint64) ([]model.PackEvent, error) {
+
 	var (
-		events = make([]model.PackEvent, 0, count)
+		events = make([]RepoPackEvent, 0, count)
 		ids    = make([]uint64, 0, count)
 	)
 
-	tx, err := e.db.BeginTxx(ctx, &sql.TxOptions{Isolation: sql.LevelRepeatableRead})
+	tx, err := e.db.BeginTxx(ctx, nil)
 	if err != nil {
 		return nil, fmt.Errorf("begin tx: %w", err)
 	}
@@ -25,7 +25,7 @@ func (e eventRepo) Lock(ctx context.Context, count uint64) ([]model.PackEvent, e
 	err = AcquireLockTx(ctx, tx)
 
 	if err != nil {
-		return nil, fmt.Errorf("try lock Lock: %w", err)
+		return nil, fmt.Errorf("try Lock: %w", err)
 	}
 
 	sQuery := sq.Select("id", "type", "lock", "payload").
@@ -62,5 +62,10 @@ func (e eventRepo) Lock(ctx context.Context, count uint64) ([]model.PackEvent, e
 		return nil, fmt.Errorf("tx.Commit: %w", err)
 	}
 
-	return events, nil
+	parsedEvents, err := parsePackEvent(events)
+	if err != nil {
+		return nil, fmt.Errorf("parse events: %w", err)
+	}
+
+	return parsedEvents, nil
 }
