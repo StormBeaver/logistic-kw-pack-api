@@ -3,6 +3,8 @@ package api
 import (
 	"context"
 
+	"github.com/opentracing/opentracing-go"
+	loggerApp "github.com/stormbeaver/logistic-pack-api/internal/logger"
 	"github.com/stormbeaver/logistic-pack-api/internal/model"
 	pb "github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-api"
 	"google.golang.org/grpc/codes"
@@ -16,7 +18,10 @@ func (o *packAPI) ListPackV1(
 	req *pb.ListPackV1Request,
 ) (*pb.ListPackV1Response, error) {
 
-	logger, err := checkLogLevel(ctx, o.logger)
+	span, ctx := opentracing.StartSpanFromContext(ctx, "api.ListPacks")
+	defer span.Finish()
+
+	logger, err := loggerApp.SetLocalLogger(ctx, o.logger)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -27,14 +32,14 @@ func (o *packAPI) ListPackV1(
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	pack, err := o.repo.List(ctx, req.GetCursor(), req.GetLimit())
+	packs, err := o.repo.List(ctx, req.GetCursor(), req.GetLimit())
 	if err != nil {
 		logger.Error().Err(err).Msg("ListPackV1 -- failed")
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	if pack == nil {
+	if packs == nil {
 		logger.Debug().Str("packs", "list").Msg("packs not found")
 		totalPackNotFound.Inc()
 
@@ -44,13 +49,13 @@ func (o *packAPI) ListPackV1(
 	logger.Debug().Msg("ListPackV1 - success")
 
 	return &pb.ListPackV1Response{
-		Items: convertPackList(pack),
+		Items: convertPacksList(packs),
 	}, nil
 }
 
-func convertPackList(pack []*model.Pack) []*pb.Pack {
-	result := make([]*pb.Pack, 0, len(pack))
-	for _, v := range pack {
+func convertPacksList(packs []*model.Pack) []*pb.Pack {
+	result := make([]*pb.Pack, 0, len(packs))
+	for _, v := range packs {
 		result = append(result, &pb.Pack{
 			Id:      v.ID,
 			Name:    v.Name,

@@ -6,6 +6,8 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
+	"github.com/opentracing/opentracing-go"
+	loggerApp "github.com/stormbeaver/logistic-pack-api/internal/logger"
 	pb "github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-api"
 )
 
@@ -15,7 +17,10 @@ func (o *packAPI) AddPackV1(
 	req *pb.AddPackV1Request,
 ) (*pb.AddPackV1Response, error) {
 
-	logger, err := checkLogLevel(ctx, o.logger)
+	span, ctx := opentracing.StartSpanFromContext(ctx, "api.AddPack")
+	defer span.Finish()
+
+	logger, err := loggerApp.SetLocalLogger(ctx, o.logger)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}

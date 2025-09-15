@@ -14,6 +14,7 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 	_ "github.com/lib/pq"
 
+	loggerApp "github.com/stormbeaver/logistic-pack-api/internal/logger"
 	"github.com/stormbeaver/logistic-pack-api/internal/server"
 
 	"github.com/stormbeaver/logistic-pack-api/internal/tracer"
@@ -45,11 +46,7 @@ func main() {
 		Str("environment", cfg.Project.Environment).
 		Msgf("Starting service: %s", cfg.Project.Name)
 
-	if cfg.Project.Debug {
-		logger = log.Level(zerolog.DebugLevel)
-	} else {
-		logger = log.Level(zerolog.InfoLevel)
-	}
+	logger = loggerApp.LogInit(cfg.Project.Debug)
 
 	dsn := fmt.Sprintf("host=%v port=%v user=%v password=%v dbname=%v sslmode=%v",
 		cfg.Database.Host,
