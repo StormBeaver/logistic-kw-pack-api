@@ -243,10 +243,17 @@ func TestConsumerDB(t *testing.T) {
 		cfgR.Repo,
 		events)
 
-	res, err := consumer.repo.Lock(initCtx, 3)
+	res, err := consumer.repo.PreProcess(initCtx, 3)
 	if err != nil {
 		fmt.Println(err)
 		t.Fail()
 	}
-	fmt.Println(res)
+	fmt.Println("PreProcess test result:", res)
+
+	res, err = consumer.repo.Lock(initCtx, 3)
+	if err != nil {
+		fmt.Println(err)
+		t.Fail()
+	}
+	fmt.Println("Lock test result:", res)
 }

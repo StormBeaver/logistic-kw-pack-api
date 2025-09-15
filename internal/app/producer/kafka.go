@@ -6,6 +6,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/stormbeaver/logistic-pack-api/internal/app/eventCounter"
 	"github.com/stormbeaver/logistic-pack-api/internal/app/repo"
 	"github.com/stormbeaver/logistic-pack-api/internal/app/sender"
 	"github.com/stormbeaver/logistic-pack-api/internal/model"
@@ -103,6 +104,7 @@ func (p *producer) delivery(toRemove, toUnlock []uint64) {
 			if err := p.repo.Unlock(p.ctx, tUnlock); err != nil {
 				log.Println(err)
 			}
+			eventCounter.EventsCount.Sub(float64(len(tUnlock)))
 		})
 	}
 
@@ -115,6 +117,7 @@ func (p *producer) delivery(toRemove, toUnlock []uint64) {
 					log.Printf("Unlock error while handling Remove error: %s", err)
 				}
 			}
+			eventCounter.EventsCount.Sub(float64(len(tRemove)))
 		})
 	}
 }

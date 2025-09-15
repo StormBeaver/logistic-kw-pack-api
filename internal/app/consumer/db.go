@@ -5,6 +5,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/stormbeaver/logistic-pack-api/internal/app/eventCounter"
 	"github.com/stormbeaver/logistic-pack-api/internal/app/repo"
 	"github.com/stormbeaver/logistic-pack-api/internal/model"
 )
@@ -73,6 +74,8 @@ func (c *consumer) lockDelivery() {
 					if err != nil {
 						continue
 					}
+					eventCounter.EventsCount.Add(float64(len(events)))
+
 					for _, event := range events {
 						c.events <- event
 					}
@@ -102,6 +105,8 @@ func (c *consumer) mainDelivery() {
 					if err != nil {
 						continue
 					}
+					eventCounter.EventsCount.Add(float64(len(events)))
+
 					for _, event := range events {
 						c.events <- event
 					}
