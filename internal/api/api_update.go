@@ -1,0 +1,50 @@
+package api
+
+import (
+	"context"
+
+	"github.com/opentracing/opentracing-go"
+	loggerApp "github.com/stormbeaver/logistic-pack-api/internal/logger"
+	pb "github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-api"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+)
+
+func (o *packAPI) UpdatePackV1(
+	ctx context.Context,
+	req *pb.UpdatePackRequest,
+) (*pb.UpdatePackResponse, error) {
+
+	span, ctx := opentracing.StartSpanFromContext(ctx, "api.UpdatePack")
+	defer span.Finish()
+
+	logger, err := loggerApp.SetLocalLogger(ctx, o.logger)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	if err := req.Validate(); err != nil {
+		logger.Error().Err(err).Msg("UpdatePackV1 - invalid argument")
+
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	updated, err := o.repo.Update(ctx, req.GetPackId(), req.GetName())
+	if err != nil {
+		logger.Error().Err(err).Msg("UpdatePackV1 -- failed")
+
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	if !updated {
+		logger.Debug().Uint64("packId", req.GetPackId()).Msg("pack not found")
+		totalPackNotFound.Inc()
+		return nil, status.Error(codes.NotFound, "pack not found")
+	}
+
+	logger.Debug().Msg("UpdatePackV1 - success")
+
+	return &pb.UpdatePackResponse{
+		Found: true,
+	}, nil
+}
