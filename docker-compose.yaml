@@ -102,7 +102,7 @@ services:
     command: sh -c "((sleep 15 && kafka-topics --create --bootstrap-server kafka:9092 --replication-factor 1 --partitions 1 --topic packs)&) && /etc/confluent/docker/run"
     networks:
       - logisticnw
-
+  
   kafka-ui:
     image: obsidiandynamics/kafdrop
     restart: unless-stopped
