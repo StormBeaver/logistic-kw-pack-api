@@ -14,6 +14,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/stormbeaver/logistic-pack-api/internal/app/repo"
 	"github.com/stormbeaver/logistic-pack-api/internal/app/retranslator"
+	"github.com/stormbeaver/logistic-pack-api/internal/app/sender"
 	"github.com/stormbeaver/logistic-pack-api/internal/config"
 	"github.com/stormbeaver/logistic-pack-api/internal/database"
 )
@@ -53,6 +54,7 @@ func main() {
 		ProducerCount: cfg.Retranslator.ProducerCount,
 		WorkerCount:   cfg.Retranslator.WorkerCount,
 		Repo:          repo.NewEventRepo(db),
+		Sender:        sender.NewEventSender(cfg.Kafka.Brokers),
 	}
 
 	retranslator := retranslator.NewRetranslator(cfgR)

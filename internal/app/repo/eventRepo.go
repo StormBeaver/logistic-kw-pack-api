@@ -34,7 +34,7 @@ func NewEventRepo(db *sqlx.DB) EventRepo {
 }
 
 // parse []RepoPackEvent into []model.PackEvent
-func parsePackEvent(src []RepoPackEvent) ([]model.PackEvent, error) {
+func parsePackEvent(src []RepoPackEvent) ([]model.PackEvent, error) { //TODO: delete this and change Lock+PreProcess signature to use RepoPackEvent instead PackEvent and maybe delete status string
 	parsedEvents := make([]model.PackEvent, len(src))
 	for i, v := range src {
 		parsedEvents[i].ID = v.ID
