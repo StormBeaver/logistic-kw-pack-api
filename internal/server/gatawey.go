@@ -13,7 +13,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 
-	pb "github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-api"
+	pb "github.com/StormBeaver/logistic-pack-api/pkg/logistic-pack-api"
 )
 
 var (

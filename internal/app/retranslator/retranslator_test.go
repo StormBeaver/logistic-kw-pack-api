@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stormbeaver/logistic-pack-api/internal/mocks"
+	"github.com/StormBeaver/logistic-pack-api/internal/mocks"
 
 	"github.com/golang/mock/gomock"
 )

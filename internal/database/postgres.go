@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	sq "github.com/Masterminds/squirrel"
+	"github.com/StormBeaver/logistic-pack-api/internal/config"
 	"github.com/rs/zerolog/log"
-	"github.com/stormbeaver/logistic-pack-api/internal/config"
 	"golang.org/x/net/context"
 
 	"github.com/jmoiron/sqlx"

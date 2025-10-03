@@ -6,7 +6,7 @@ endif
 export GO111MODULE=on
 
 SERVICE_NAME=logistic-pack-api
-SERVICE_PATH=stormbeaver/logistic-pack-api
+SERVICE_PATH=StormBeaver/logistic-pack-api
 
 PGV_VERSION:="v0.6.1"
 BUF_VERSION:="v1.16.0"

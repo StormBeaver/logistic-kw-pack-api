@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"sync/atomic"
 
-	"github.com/stormbeaver/logistic-pack-api/internal/config"
+	"github.com/StormBeaver/logistic-pack-api/internal/config"
 
 	"github.com/rs/zerolog/log"
 )

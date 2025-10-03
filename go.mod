@@ -1,4 +1,4 @@
-module github.com/stormbeaver/logistic-pack-api
+module github.com/StormBeaver/logistic-pack-api
 
 go 1.24.0
 
@@ -17,7 +17,7 @@ require (
 	github.com/pressly/goose/v3 v3.1.0
 	github.com/prometheus/client_golang v1.11.0
 	github.com/rs/zerolog v1.34.0
-	github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-api v0.0.0-00010101000000-000000000000
+	github.com/StormBeaver/logistic-pack-api/pkg/logistic-pack-api v0.0.0-00010101000000-000000000000
 	github.com/uber/jaeger-client-go v2.29.1+incompatible
 	golang.org/x/net v0.43.0
 	google.golang.org/grpc v1.75.1
@@ -74,4 +74,4 @@ require (
 	google.golang.org/genproto v0.0.0-20211029142109-e255c875f7c7 // indirect
 )
 
-replace github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-api => ./pkg/logistic-pack-api
+replace github.com/StormBeaver/logistic-pack-api/pkg/logistic-pack-api => ./pkg/logistic-pack-api

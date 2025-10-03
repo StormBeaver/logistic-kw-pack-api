@@ -54,6 +54,8 @@ func (m *Pack) Validate() error {
 		}
 	}
 
+	// no validation rules for Describe
+
 	return nil
 }
 
@@ -199,6 +201,13 @@ func (m *AddPackV1Response) Validate() error {
 	}
 
 	// no validation rules for PackId
+
+	if len(m.GetDescribe()) > 512 {
+		return AddPackV1ResponseValidationError{
+			field:  "Describe",
+			reason: "value length must be at most 512 bytes",
+		}
+	}
 
 	return nil
 }
@@ -434,6 +443,13 @@ func (m *UpdatePackRequest) Validate() error {
 		return UpdatePackRequestValidationError{
 			field:  "Name",
 			reason: "value length must be at most 256 bytes",
+		}
+	}
+
+	if len(m.GetDescribe()) > 512 {
+		return UpdatePackRequestValidationError{
+			field:  "Describe",
+			reason: "value length must be at most 512 bytes",
 		}
 	}
 

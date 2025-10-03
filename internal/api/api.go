@@ -5,9 +5,9 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/rs/zerolog"
 
-	"github.com/stormbeaver/logistic-pack-api/internal/repo"
+	"github.com/StormBeaver/logistic-pack-api/internal/repo"
 
-	pb "github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-api"
+	pb "github.com/StormBeaver/logistic-pack-api/pkg/logistic-pack-api"
 )
 
 var (

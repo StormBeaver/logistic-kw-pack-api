@@ -8,15 +8,15 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/StormBeaver/logistic-pack-api/internal/app/repo"
+	"github.com/StormBeaver/logistic-pack-api/internal/app/retranslator"
+	"github.com/StormBeaver/logistic-pack-api/internal/app/sender"
+	"github.com/StormBeaver/logistic-pack-api/internal/config"
+	"github.com/StormBeaver/logistic-pack-api/internal/database"
 	_ "github.com/jackc/pgx/v4"
 	_ "github.com/jackc/pgx/v4/stdlib"
 	_ "github.com/lib/pq"
 	"github.com/rs/zerolog/log"
-	"github.com/stormbeaver/logistic-pack-api/internal/app/repo"
-	"github.com/stormbeaver/logistic-pack-api/internal/app/retranslator"
-	"github.com/stormbeaver/logistic-pack-api/internal/app/sender"
-	"github.com/stormbeaver/logistic-pack-api/internal/config"
-	"github.com/stormbeaver/logistic-pack-api/internal/database"
 )
 
 func main() {

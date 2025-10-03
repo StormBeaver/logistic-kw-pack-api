@@ -4,6 +4,7 @@ package logistic_pack_api
 
 import (
 	context "context"
+
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -40,7 +41,7 @@ func NewLogisticPackApiServiceClient(cc grpc.ClientConnInterface) LogisticPackAp
 
 func (c *logisticPackApiServiceClient) AddPackV1(ctx context.Context, in *AddPackV1Request, opts ...grpc.CallOption) (*AddPackV1Response, error) {
 	out := new(AddPackV1Response)
-	err := c.cc.Invoke(ctx, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/AddPackV1", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/AddPackV1", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +50,7 @@ func (c *logisticPackApiServiceClient) AddPackV1(ctx context.Context, in *AddPac
 
 func (c *logisticPackApiServiceClient) GetPackV1(ctx context.Context, in *GetPackV1Request, opts ...grpc.CallOption) (*GetPackV1Response, error) {
 	out := new(GetPackV1Response)
-	err := c.cc.Invoke(ctx, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/GetPackV1", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/GetPackV1", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +59,7 @@ func (c *logisticPackApiServiceClient) GetPackV1(ctx context.Context, in *GetPac
 
 func (c *logisticPackApiServiceClient) ListPackV1(ctx context.Context, in *ListPackV1Request, opts ...grpc.CallOption) (*ListPackV1Response, error) {
 	out := new(ListPackV1Response)
-	err := c.cc.Invoke(ctx, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/ListPackV1", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/ListPackV1", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +68,7 @@ func (c *logisticPackApiServiceClient) ListPackV1(ctx context.Context, in *ListP
 
 func (c *logisticPackApiServiceClient) UpdatePackV1(ctx context.Context, in *UpdatePackRequest, opts ...grpc.CallOption) (*UpdatePackResponse, error) {
 	out := new(UpdatePackResponse)
-	err := c.cc.Invoke(ctx, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/UpdatePackV1", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/UpdatePackV1", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +77,7 @@ func (c *logisticPackApiServiceClient) UpdatePackV1(ctx context.Context, in *Upd
 
 func (c *logisticPackApiServiceClient) RemovePackV1(ctx context.Context, in *RemovePackV1Request, opts ...grpc.CallOption) (*RemovePackV1Response, error) {
 	out := new(RemovePackV1Response)
-	err := c.cc.Invoke(ctx, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/RemovePackV1", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/RemovePackV1", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +144,7 @@ func _LogisticPackApiService_AddPackV1_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/AddPackV1",
+		FullMethod: "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/AddPackV1",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LogisticPackApiServiceServer).AddPackV1(ctx, req.(*AddPackV1Request))
@@ -161,7 +162,7 @@ func _LogisticPackApiService_GetPackV1_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/GetPackV1",
+		FullMethod: "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/GetPackV1",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LogisticPackApiServiceServer).GetPackV1(ctx, req.(*GetPackV1Request))
@@ -179,7 +180,7 @@ func _LogisticPackApiService_ListPackV1_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/ListPackV1",
+		FullMethod: "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/ListPackV1",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LogisticPackApiServiceServer).ListPackV1(ctx, req.(*ListPackV1Request))
@@ -197,7 +198,7 @@ func _LogisticPackApiService_UpdatePackV1_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/UpdatePackV1",
+		FullMethod: "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/UpdatePackV1",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LogisticPackApiServiceServer).UpdatePackV1(ctx, req.(*UpdatePackRequest))
@@ -215,7 +216,7 @@ func _LogisticPackApiService_RemovePackV1_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/RemovePackV1",
+		FullMethod: "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/RemovePackV1",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LogisticPackApiServiceServer).RemovePackV1(ctx, req.(*RemovePackV1Request))
@@ -227,7 +228,7 @@ func _LogisticPackApiService_RemovePackV1_Handler(srv interface{}, ctx context.C
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var LogisticPackApiService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "stormbeaver.logistic_pack_api.v1.LogisticPackApiService",
+	ServiceName: "StormBeaver.logistic_pack_api.v1.LogisticPackApiService",
 	HandlerType: (*LogisticPackApiServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

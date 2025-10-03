@@ -3,12 +3,12 @@ package retranslator
 import (
 	"time"
 
-	"github.com/stormbeaver/logistic-pack-api/internal/model"
+	"github.com/StormBeaver/logistic-pack-api/internal/model"
 
-	"github.com/stormbeaver/logistic-pack-api/internal/app/consumer"
-	"github.com/stormbeaver/logistic-pack-api/internal/app/producer"
-	"github.com/stormbeaver/logistic-pack-api/internal/app/repo"
-	"github.com/stormbeaver/logistic-pack-api/internal/app/sender"
+	"github.com/StormBeaver/logistic-pack-api/internal/app/consumer"
+	"github.com/StormBeaver/logistic-pack-api/internal/app/producer"
+	"github.com/StormBeaver/logistic-pack-api/internal/app/repo"
+	"github.com/StormBeaver/logistic-pack-api/internal/app/sender"
 
 	"github.com/gammazero/workerpool"
 )

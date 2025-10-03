@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/StormBeaver/logistic-pack-api/internal/model"
 	"github.com/jmoiron/sqlx"
-	"github.com/stormbeaver/logistic-pack-api/internal/model"
 )
 
 type EventRepo interface {

@@ -9,16 +9,16 @@ import (
 	"testing"
 	"time"
 
+	"github.com/StormBeaver/logistic-pack-api/internal/app/repo"
+	"github.com/StormBeaver/logistic-pack-api/internal/app/sender"
+	"github.com/StormBeaver/logistic-pack-api/internal/config"
+	"github.com/StormBeaver/logistic-pack-api/internal/database"
+	"github.com/StormBeaver/logistic-pack-api/internal/mocks"
+	"github.com/StormBeaver/logistic-pack-api/internal/model"
 	"github.com/golang/mock/gomock"
 	_ "github.com/jackc/pgx/v4"
 	_ "github.com/jackc/pgx/v4/stdlib"
 	_ "github.com/lib/pq"
-	"github.com/stormbeaver/logistic-pack-api/internal/app/repo"
-	"github.com/stormbeaver/logistic-pack-api/internal/app/sender"
-	"github.com/stormbeaver/logistic-pack-api/internal/config"
-	"github.com/stormbeaver/logistic-pack-api/internal/database"
-	"github.com/stormbeaver/logistic-pack-api/internal/mocks"
-	"github.com/stormbeaver/logistic-pack-api/internal/model"
 )
 
 type ConfigDB struct {

@@ -6,7 +6,7 @@ import (
 	"time"
 
 	sq "github.com/Masterminds/squirrel"
-	"github.com/stormbeaver/logistic-pack-api/internal/model"
+	"github.com/StormBeaver/logistic-pack-api/internal/model"
 )
 
 func (e eventRepo) Lock(ctx context.Context, count uint64) ([]model.PackEvent, error) {

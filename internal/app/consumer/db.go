@@ -5,9 +5,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/stormbeaver/logistic-pack-api/internal/app/eventCounter"
-	"github.com/stormbeaver/logistic-pack-api/internal/app/repo"
-	"github.com/stormbeaver/logistic-pack-api/internal/model"
+	"github.com/StormBeaver/logistic-pack-api/internal/app/eventCounter"
+	"github.com/StormBeaver/logistic-pack-api/internal/app/repo"
+	"github.com/StormBeaver/logistic-pack-api/internal/model"
 )
 
 type Consumer interface {

@@ -14,14 +14,14 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 	_ "github.com/lib/pq"
 
-	loggerApp "github.com/stormbeaver/logistic-pack-api/internal/logger"
-	"github.com/stormbeaver/logistic-pack-api/internal/server"
+	loggerApp "github.com/StormBeaver/logistic-pack-api/internal/logger"
+	"github.com/StormBeaver/logistic-pack-api/internal/server"
 
-	"github.com/stormbeaver/logistic-pack-api/internal/tracer"
+	"github.com/StormBeaver/logistic-pack-api/internal/tracer"
 
-	"github.com/stormbeaver/logistic-pack-api/internal/database"
+	"github.com/StormBeaver/logistic-pack-api/internal/database"
 
-	"github.com/stormbeaver/logistic-pack-api/internal/config"
+	"github.com/StormBeaver/logistic-pack-api/internal/config"
 )
 
 var (

@@ -5,7 +5,7 @@ import (
 
 	"github.com/jmoiron/sqlx"
 
-	"github.com/stormbeaver/logistic-pack-api/internal/model"
+	"github.com/StormBeaver/logistic-pack-api/internal/model"
 )
 
 // Repo is DAO for Pack

@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stormbeaver/logistic-pack-api/internal/mocks"
-	"github.com/stormbeaver/logistic-pack-api/internal/model"
+	"github.com/StormBeaver/logistic-pack-api/internal/mocks"
+	"github.com/StormBeaver/logistic-pack-api/internal/model"
 
 	"github.com/gammazero/workerpool"
 	"github.com/golang/mock/gomock"

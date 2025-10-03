@@ -3,10 +3,10 @@ package api
 import (
 	"context"
 
+	loggerApp "github.com/StormBeaver/logistic-pack-api/internal/logger"
+	"github.com/StormBeaver/logistic-pack-api/internal/model"
+	pb "github.com/StormBeaver/logistic-pack-api/pkg/logistic-pack-api"
 	"github.com/opentracing/opentracing-go"
-	loggerApp "github.com/stormbeaver/logistic-pack-api/internal/logger"
-	"github.com/stormbeaver/logistic-pack-api/internal/model"
-	pb "github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-api"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"

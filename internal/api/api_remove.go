@@ -6,9 +6,9 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
+	loggerApp "github.com/StormBeaver/logistic-pack-api/internal/logger"
+	pb "github.com/StormBeaver/logistic-pack-api/pkg/logistic-pack-api"
 	"github.com/opentracing/opentracing-go"
-	loggerApp "github.com/stormbeaver/logistic-pack-api/internal/logger"
-	pb "github.com/stormbeaver/logistic-pack-api/pkg/logistic-pack-api"
 )
 
 // RemovePackV1 - remove a pack by ID

@@ -1,6 +1,6 @@
 # Builder
 
-ARG GITHUB_PATH=github.com/stormbeaver/logistic-pack-api
+ARG GITHUB_PATH=github.com/StormBeaver/logistic-pack-api
 
 FROM golang:1.24.1-alpine AS builder
 

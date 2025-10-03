@@ -8,7 +8,7 @@ import (
 	"time"
 
 	sq "github.com/Masterminds/squirrel"
-	"github.com/stormbeaver/logistic-pack-api/internal/model"
+	"github.com/StormBeaver/logistic-pack-api/internal/model"
 )
 
 func (r *repo) Remove(ctx context.Context, packID uint64) (bool, error) {

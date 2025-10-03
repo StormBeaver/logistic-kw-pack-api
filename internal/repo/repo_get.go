@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	sq "github.com/Masterminds/squirrel"
-	"github.com/stormbeaver/logistic-pack-api/internal/model"
+	"github.com/StormBeaver/logistic-pack-api/internal/model"
 )
 
 func (r *repo) Get(ctx context.Context, packID uint64) (*model.Pack, error) {

@@ -31,18 +31,15 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-var (
-	filter_LogisticPackApiService_AddPackV1_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
-)
-
 func request_LogisticPackApiService_AddPackV1_0(ctx context.Context, marshaler runtime.Marshaler, client LogisticPackApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq AddPackV1Request
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_LogisticPackApiService_AddPackV1_0); err != nil {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -55,10 +52,11 @@ func local_request_LogisticPackApiService_AddPackV1_0(ctx context.Context, marsh
 	var protoReq AddPackV1Request
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_LogisticPackApiService_AddPackV1_0); err != nil {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -71,21 +69,12 @@ func request_LogisticPackApiService_GetPackV1_0(ctx context.Context, marshaler r
 	var protoReq GetPackV1Request
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["pack_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "pack_id")
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-
-	protoReq.PackId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "pack_id", err)
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.GetPackV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -97,21 +86,12 @@ func local_request_LogisticPackApiService_GetPackV1_0(ctx context.Context, marsh
 	var protoReq GetPackV1Request
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["pack_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "pack_id")
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-
-	protoReq.PackId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "pack_id", err)
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.GetPackV1(ctx, &protoReq)
@@ -123,31 +103,12 @@ func request_LogisticPackApiService_ListPackV1_0(ctx context.Context, marshaler 
 	var protoReq ListPackV1Request
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["cursor"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cursor")
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-
-	protoReq.Cursor, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cursor", err)
-	}
-
-	val, ok = pathParams["limit"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "limit")
-	}
-
-	protoReq.Limit, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "limit", err)
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.ListPackV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -159,31 +120,12 @@ func local_request_LogisticPackApiService_ListPackV1_0(ctx context.Context, mars
 	var protoReq ListPackV1Request
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["cursor"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cursor")
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-
-	protoReq.Cursor, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cursor", err)
-	}
-
-	val, ok = pathParams["limit"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "limit")
-	}
-
-	protoReq.Limit, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "limit", err)
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.ListPackV1(ctx, &protoReq)
@@ -191,35 +133,15 @@ func local_request_LogisticPackApiService_ListPackV1_0(ctx context.Context, mars
 
 }
 
-var (
-	filter_LogisticPackApiService_UpdatePackV1_0 = &utilities.DoubleArray{Encoding: map[string]int{"pack_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
-)
-
 func request_LogisticPackApiService_UpdatePackV1_0(ctx context.Context, marshaler runtime.Marshaler, client LogisticPackApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpdatePackRequest
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["pack_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "pack_id")
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-
-	protoReq.PackId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "pack_id", err)
-	}
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_LogisticPackApiService_UpdatePackV1_0); err != nil {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -232,27 +154,11 @@ func local_request_LogisticPackApiService_UpdatePackV1_0(ctx context.Context, ma
 	var protoReq UpdatePackRequest
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["pack_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "pack_id")
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-
-	protoReq.PackId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "pack_id", err)
-	}
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_LogisticPackApiService_UpdatePackV1_0); err != nil {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -261,18 +167,15 @@ func local_request_LogisticPackApiService_UpdatePackV1_0(ctx context.Context, ma
 
 }
 
-var (
-	filter_LogisticPackApiService_RemovePackV1_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
-)
-
 func request_LogisticPackApiService_RemovePackV1_0(ctx context.Context, marshaler runtime.Marshaler, client LogisticPackApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq RemovePackV1Request
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_LogisticPackApiService_RemovePackV1_0); err != nil {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -285,10 +188,11 @@ func local_request_LogisticPackApiService_RemovePackV1_0(ctx context.Context, ma
 	var protoReq RemovePackV1Request
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_LogisticPackApiService_RemovePackV1_0); err != nil {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -309,7 +213,7 @@ func RegisterLogisticPackApiServiceHandlerServer(ctx context.Context, mux *runti
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/AddPackV1", runtime.WithHTTPPathPattern("/v1/packs/create"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/AddPackV1", runtime.WithHTTPPathPattern("/createPack"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -326,13 +230,13 @@ func RegisterLogisticPackApiServiceHandlerServer(ctx context.Context, mux *runti
 
 	})
 
-	mux.Handle("GET", pattern_LogisticPackApiService_GetPackV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_LogisticPackApiService_GetPackV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/GetPackV1", runtime.WithHTTPPathPattern("/v1/packs/{pack_id}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/GetPackV1", runtime.WithHTTPPathPattern("/getPack"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -349,13 +253,13 @@ func RegisterLogisticPackApiServiceHandlerServer(ctx context.Context, mux *runti
 
 	})
 
-	mux.Handle("GET", pattern_LogisticPackApiService_ListPackV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_LogisticPackApiService_ListPackV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/ListPackV1", runtime.WithHTTPPathPattern("/v1/packs/{cursor}/{limit}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/ListPackV1", runtime.WithHTTPPathPattern("/listPacks"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -372,13 +276,13 @@ func RegisterLogisticPackApiServiceHandlerServer(ctx context.Context, mux *runti
 
 	})
 
-	mux.Handle("PUT", pattern_LogisticPackApiService_UpdatePackV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_LogisticPackApiService_UpdatePackV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/UpdatePackV1", runtime.WithHTTPPathPattern("/v1/packs/update/{pack_id}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/UpdatePackV1", runtime.WithHTTPPathPattern("/updatePack"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -395,13 +299,13 @@ func RegisterLogisticPackApiServiceHandlerServer(ctx context.Context, mux *runti
 
 	})
 
-	mux.Handle("DELETE", pattern_LogisticPackApiService_RemovePackV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_LogisticPackApiService_RemovePackV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/RemovePackV1", runtime.WithHTTPPathPattern("/v1/packs/remove"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/RemovePackV1", runtime.WithHTTPPathPattern("/removePack"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -463,7 +367,7 @@ func RegisterLogisticPackApiServiceHandlerClient(ctx context.Context, mux *runti
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/AddPackV1", runtime.WithHTTPPathPattern("/v1/packs/create"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/AddPackV1", runtime.WithHTTPPathPattern("/createPack"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -479,11 +383,11 @@ func RegisterLogisticPackApiServiceHandlerClient(ctx context.Context, mux *runti
 
 	})
 
-	mux.Handle("GET", pattern_LogisticPackApiService_GetPackV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_LogisticPackApiService_GetPackV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/GetPackV1", runtime.WithHTTPPathPattern("/v1/packs/{pack_id}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/GetPackV1", runtime.WithHTTPPathPattern("/getPack"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -499,11 +403,11 @@ func RegisterLogisticPackApiServiceHandlerClient(ctx context.Context, mux *runti
 
 	})
 
-	mux.Handle("GET", pattern_LogisticPackApiService_ListPackV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_LogisticPackApiService_ListPackV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/ListPackV1", runtime.WithHTTPPathPattern("/v1/packs/{cursor}/{limit}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/ListPackV1", runtime.WithHTTPPathPattern("/listPacks"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -519,11 +423,11 @@ func RegisterLogisticPackApiServiceHandlerClient(ctx context.Context, mux *runti
 
 	})
 
-	mux.Handle("PUT", pattern_LogisticPackApiService_UpdatePackV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_LogisticPackApiService_UpdatePackV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/UpdatePackV1", runtime.WithHTTPPathPattern("/v1/packs/update/{pack_id}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/UpdatePackV1", runtime.WithHTTPPathPattern("/updatePack"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -539,11 +443,11 @@ func RegisterLogisticPackApiServiceHandlerClient(ctx context.Context, mux *runti
 
 	})
 
-	mux.Handle("DELETE", pattern_LogisticPackApiService_RemovePackV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_LogisticPackApiService_RemovePackV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/stormbeaver.logistic_pack_api.v1.LogisticPackApiService/RemovePackV1", runtime.WithHTTPPathPattern("/v1/packs/remove"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/StormBeaver.logistic_pack_api.v1.LogisticPackApiService/RemovePackV1", runtime.WithHTTPPathPattern("/removePack"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -563,15 +467,15 @@ func RegisterLogisticPackApiServiceHandlerClient(ctx context.Context, mux *runti
 }
 
 var (
-	pattern_LogisticPackApiService_AddPackV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "packs", "create"}, ""))
+	pattern_LogisticPackApiService_AddPackV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"createPack"}, ""))
 
-	pattern_LogisticPackApiService_GetPackV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "packs", "pack_id"}, ""))
+	pattern_LogisticPackApiService_GetPackV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getPack"}, ""))
 
-	pattern_LogisticPackApiService_ListPackV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "packs", "cursor", "limit"}, ""))
+	pattern_LogisticPackApiService_ListPackV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"listPacks"}, ""))
 
-	pattern_LogisticPackApiService_UpdatePackV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "packs", "update", "pack_id"}, ""))
+	pattern_LogisticPackApiService_UpdatePackV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"updatePack"}, ""))
 
-	pattern_LogisticPackApiService_RemovePackV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "packs", "remove"}, ""))
+	pattern_LogisticPackApiService_RemovePackV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"removePack"}, ""))
 )
 
 var (
