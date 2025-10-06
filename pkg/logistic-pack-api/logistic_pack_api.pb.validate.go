@@ -135,6 +135,13 @@ func (m *AddPackV1Request) Validate() error {
 		}
 	}
 
+	if len(m.GetDescribe()) > 512 {
+		return AddPackV1RequestValidationError{
+			field:  "Describe",
+			reason: "value length must be at most 512 bytes",
+		}
+	}
+
 	return nil
 }
 
