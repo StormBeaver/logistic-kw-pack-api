@@ -134,7 +134,7 @@ func local_request_LogisticPackApiService_ListPackV1_0(ctx context.Context, mars
 }
 
 func request_LogisticPackApiService_UpdatePackV1_0(ctx context.Context, marshaler runtime.Marshaler, client LogisticPackApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UpdatePackRequest
+	var protoReq UpdatePackV1Request
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -151,7 +151,7 @@ func request_LogisticPackApiService_UpdatePackV1_0(ctx context.Context, marshale
 }
 
 func local_request_LogisticPackApiService_UpdatePackV1_0(ctx context.Context, marshaler runtime.Marshaler, server LogisticPackApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UpdatePackRequest
+	var protoReq UpdatePackV1Request
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)

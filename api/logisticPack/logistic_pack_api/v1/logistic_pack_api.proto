@@ -36,7 +36,7 @@ service LogisticPackApiService {
   }
 
   //UpdatePackV1 - update already existing pack
-  rpc UpdatePackV1(UpdatePackRequest) returns (UpdatePackResponse) {
+  rpc UpdatePackV1(UpdatePackV1Request) returns (UpdatePackV1Response) {
        option (google.api.http) = {
       post: "/updatePack"
       body: "*"
@@ -77,13 +77,13 @@ message GetPackV1Response {
   Pack value = 1;
 }
 
-message UpdatePackRequest {
+message UpdatePackV1Request {
   uint64 pack_id = 1 [(validate.rules).uint64.gt = 0];
   string name = 2 [(validate.rules).string = {min_len: 3, max_bytes:256}];
   string describe = 3 [(validate.rules).string = {max_bytes:512}];
 }
 
-message UpdatePackResponse {
+message UpdatePackV1Response {
   bool found = 1;
 }
 

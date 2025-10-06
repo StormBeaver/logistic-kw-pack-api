@@ -424,37 +424,37 @@ var _ interface {
 	ErrorName() string
 } = GetPackV1ResponseValidationError{}
 
-// Validate checks the field values on UpdatePackRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, an
-// error is returned.
-func (m *UpdatePackRequest) Validate() error {
+// Validate checks the field values on UpdatePackV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *UpdatePackV1Request) Validate() error {
 	if m == nil {
 		return nil
 	}
 
 	if m.GetPackId() <= 0 {
-		return UpdatePackRequestValidationError{
+		return UpdatePackV1RequestValidationError{
 			field:  "PackId",
 			reason: "value must be greater than 0",
 		}
 	}
 
 	if utf8.RuneCountInString(m.GetName()) < 3 {
-		return UpdatePackRequestValidationError{
+		return UpdatePackV1RequestValidationError{
 			field:  "Name",
 			reason: "value length must be at least 3 runes",
 		}
 	}
 
 	if len(m.GetName()) > 256 {
-		return UpdatePackRequestValidationError{
+		return UpdatePackV1RequestValidationError{
 			field:  "Name",
 			reason: "value length must be at most 256 bytes",
 		}
 	}
 
 	if len(m.GetDescribe()) > 512 {
-		return UpdatePackRequestValidationError{
+		return UpdatePackV1RequestValidationError{
 			field:  "Describe",
 			reason: "value length must be at most 512 bytes",
 		}
@@ -463,9 +463,9 @@ func (m *UpdatePackRequest) Validate() error {
 	return nil
 }
 
-// UpdatePackRequestValidationError is the validation error returned by
-// UpdatePackRequest.Validate if the designated constraints aren't met.
-type UpdatePackRequestValidationError struct {
+// UpdatePackV1RequestValidationError is the validation error returned by
+// UpdatePackV1Request.Validate if the designated constraints aren't met.
+type UpdatePackV1RequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -473,24 +473,24 @@ type UpdatePackRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e UpdatePackRequestValidationError) Field() string { return e.field }
+func (e UpdatePackV1RequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e UpdatePackRequestValidationError) Reason() string { return e.reason }
+func (e UpdatePackV1RequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e UpdatePackRequestValidationError) Cause() error { return e.cause }
+func (e UpdatePackV1RequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e UpdatePackRequestValidationError) Key() bool { return e.key }
+func (e UpdatePackV1RequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e UpdatePackRequestValidationError) ErrorName() string {
-	return "UpdatePackRequestValidationError"
+func (e UpdatePackV1RequestValidationError) ErrorName() string {
+	return "UpdatePackV1RequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e UpdatePackRequestValidationError) Error() string {
+func (e UpdatePackV1RequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -502,14 +502,14 @@ func (e UpdatePackRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sUpdatePackRequest.%s: %s%s",
+		"invalid %sUpdatePackV1Request.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = UpdatePackRequestValidationError{}
+var _ error = UpdatePackV1RequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -517,12 +517,12 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = UpdatePackRequestValidationError{}
+} = UpdatePackV1RequestValidationError{}
 
-// Validate checks the field values on UpdatePackResponse with the rules
+// Validate checks the field values on UpdatePackV1Response with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *UpdatePackResponse) Validate() error {
+func (m *UpdatePackV1Response) Validate() error {
 	if m == nil {
 		return nil
 	}
@@ -532,9 +532,9 @@ func (m *UpdatePackResponse) Validate() error {
 	return nil
 }
 
-// UpdatePackResponseValidationError is the validation error returned by
-// UpdatePackResponse.Validate if the designated constraints aren't met.
-type UpdatePackResponseValidationError struct {
+// UpdatePackV1ResponseValidationError is the validation error returned by
+// UpdatePackV1Response.Validate if the designated constraints aren't met.
+type UpdatePackV1ResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -542,24 +542,24 @@ type UpdatePackResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e UpdatePackResponseValidationError) Field() string { return e.field }
+func (e UpdatePackV1ResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e UpdatePackResponseValidationError) Reason() string { return e.reason }
+func (e UpdatePackV1ResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e UpdatePackResponseValidationError) Cause() error { return e.cause }
+func (e UpdatePackV1ResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e UpdatePackResponseValidationError) Key() bool { return e.key }
+func (e UpdatePackV1ResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e UpdatePackResponseValidationError) ErrorName() string {
-	return "UpdatePackResponseValidationError"
+func (e UpdatePackV1ResponseValidationError) ErrorName() string {
+	return "UpdatePackV1ResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e UpdatePackResponseValidationError) Error() string {
+func (e UpdatePackV1ResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -571,14 +571,14 @@ func (e UpdatePackResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sUpdatePackResponse.%s: %s%s",
+		"invalid %sUpdatePackV1Response.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = UpdatePackResponseValidationError{}
+var _ error = UpdatePackV1ResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -586,7 +586,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = UpdatePackResponseValidationError{}
+} = UpdatePackV1ResponseValidationError{}
 
 // Validate checks the field values on ListPackV1Request with the rules defined
 // in the proto definition for this message. If any rules are violated, an
