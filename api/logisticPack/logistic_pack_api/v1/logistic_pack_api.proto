@@ -61,7 +61,7 @@ message Pack {
 
 message AddPackV1Request {
   string name = 1 [(validate.rules).string = {min_len: 3, max_bytes:256}];
-  
+  string describe = 2 [(validate.rules).string = {max_bytes:512}];
 }
 
 message AddPackV1Response {
