@@ -12,8 +12,8 @@ import (
 
 func (o *packAPI) UpdatePackV1(
 	ctx context.Context,
-	req *pb.UpdatePackRequest,
-) (*pb.UpdatePackResponse, error) {
+	req *pb.UpdatePackV1Request,
+) (*pb.UpdatePackV1Response, error) {
 
 	span, ctx := opentracing.StartSpanFromContext(ctx, "api.UpdatePack")
 	defer span.Finish()
@@ -44,7 +44,7 @@ func (o *packAPI) UpdatePackV1(
 
 	logger.Debug().Msg("UpdatePackV1 - success")
 
-	return &pb.UpdatePackResponse{
+	return &pb.UpdatePackV1Response{
 		Found: true,
 	}, nil
 }
