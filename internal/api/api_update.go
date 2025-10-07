@@ -24,12 +24,21 @@ func (o *packAPI) UpdatePackV1(
 	}
 
 	if err := req.Validate(); err != nil {
-		logger.Error().Err(err).Msg("UpdatePackV1 - invalid argument")
+
+		logger.Error().Err(err).
+			Uint64("id", req.GetPackId()).
+			Str("name", req.GetName()).
+			Str("describe", req.GetDescribe()).Msg("UpdatePackV1 - invalid argument")
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
+	logger.Debug().Uint64("id", req.GetPackId()).
+		Str("name", req.GetName()).
+		Str("describe", req.GetDescribe()).Msg("update arguments")
+
 	updated, err := o.repo.Update(ctx, req.GetPackId(), req.GetName())
+
 	if err != nil {
 		logger.Error().Err(err).Msg("UpdatePackV1 -- failed")
 

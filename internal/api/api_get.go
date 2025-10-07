@@ -27,10 +27,13 @@ func (o *packAPI) GetPackV1(
 	}
 
 	if err := req.Validate(); err != nil {
-		logger.Error().Err(err).Msg("GetPackV1 - invalid argument")
+		logger.Error().Err(err).
+			Uint64("id", req.GetPackId()).Msg("GetPackV1 - invalid argument")
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
+
+	logger.Debug().Uint64("id", req.GetPackId()).Msg("get argument")
 
 	pack, err := o.repo.Get(ctx, req.GetPackId())
 	if err != nil {

@@ -26,10 +26,13 @@ func (o *packAPI) RemovePackV1(
 	}
 
 	if err := req.Validate(); err != nil {
-		logger.Error().Err(err).Msg("RemovePackV1 - invalid argument")
+		logger.Error().Err(err).
+			Uint64("id", req.GetPackId()).Msg("RemovePackV1 - invalid argument")
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
+
+	logger.Debug().Uint64("id", req.GetPackId()).Msg("remove argument")
 
 	deleted, err := o.repo.Remove(ctx, req.GetPackId())
 	if err != nil {

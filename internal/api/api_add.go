@@ -26,10 +26,15 @@ func (o *packAPI) AddPackV1(
 	}
 
 	if err := req.Validate(); err != nil {
-		logger.Error().Err(err).Msg("AddPackV1 - invalid argument")
+		logger.Error().Err(err).
+			Str("name", req.GetName()).
+			Str("describe", req.GetDescribe()).Msg("AddPackV1 - invalid arguments")
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
+
+	logger.Debug().Str("name", req.GetName()).
+		Str("describe", req.GetDescribe()).Msg("add arguments")
 
 	packId, err := o.repo.Add(ctx, req.GetName())
 	if err != nil {

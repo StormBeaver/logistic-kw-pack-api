@@ -27,10 +27,16 @@ func (o *packAPI) ListPackV1(
 	}
 
 	if err := req.Validate(); err != nil {
-		logger.Error().Err(err).Msg("ListPackV1 - invalid arguments")
+		logger.Error().Err(err).
+			Uint64("cursor", req.GetCursor()).
+			Uint64("limit", req.GetLimit()).Msg("UpdatePackV1 - invalid arguments")
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
+
+	logger.Debug().
+		Uint64("cursor", req.GetCursor()).
+		Uint64("limit", req.GetLimit()).Msg("list arguments")
 
 	packs, err := o.repo.List(ctx, req.GetCursor(), req.GetLimit())
 	if err != nil {
