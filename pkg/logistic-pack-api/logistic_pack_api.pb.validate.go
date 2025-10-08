@@ -209,13 +209,6 @@ func (m *AddPackV1Response) Validate() error {
 
 	// no validation rules for PackId
 
-	if len(m.GetDescribe()) > 512 {
-		return AddPackV1ResponseValidationError{
-			field:  "Describe",
-			reason: "value length must be at most 512 bytes",
-		}
-	}
-
 	return nil
 }
 
@@ -436,13 +429,6 @@ func (m *UpdatePackV1Request) Validate() error {
 		return UpdatePackV1RequestValidationError{
 			field:  "PackId",
 			reason: "value must be greater than 0",
-		}
-	}
-
-	if utf8.RuneCountInString(m.GetName()) < 3 {
-		return UpdatePackV1RequestValidationError{
-			field:  "Name",
-			reason: "value length must be at least 3 runes",
 		}
 	}
 

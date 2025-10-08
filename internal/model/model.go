@@ -5,10 +5,11 @@ import (
 )
 
 type Pack struct {
-	ID      uint64    `db:"id"`
-	Name    string    `db:"name"`
-	Created time.Time `db:"created"`
-	Updated time.Time `db:"updated"`
+	ID       uint64    `db:"id"`
+	Name     string    `db:"name"`
+	Describe string    `db:"describe"`
+	Created  time.Time `db:"created"`
+	Updated  time.Time `db:"updated"`
 }
 
 type PackEvent struct {

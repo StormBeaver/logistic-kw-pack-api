@@ -36,7 +36,7 @@ func (o *packAPI) AddPackV1(
 	logger.Debug().Str("name", req.GetName()).
 		Str("describe", req.GetDescribe()).Msg("add arguments")
 
-	packId, err := o.repo.Add(ctx, req.GetName())
+	packId, err := o.repo.Add(ctx, req.GetName(), req.GetDescribe())
 	if err != nil {
 		logger.Error().Err(err).Msg("AddPackV1 -- failed")
 

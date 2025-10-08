@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"time"
 
@@ -11,8 +12,15 @@ import (
 	"github.com/StormBeaver/logistic-pack-api/internal/model"
 )
 
+var errArgsEmpty = errors.New("arguments are empty")
+
 // add entities into packs and packs_events tables
-func (r *repo) Update(ctx context.Context, packID uint64, name string) (bool, error) {
+func (r *repo) Update(ctx context.Context, packID uint64, name, describe string) (bool, error) {
+
+	if name == "" && describe == "" {
+		return false, errArgsEmpty
+	}
+
 	tx, err := r.db.BeginTxx(ctx, &sql.TxOptions{Isolation: sql.LevelRepeatableRead})
 	if err != nil {
 		return false, fmt.Errorf("begin tx: %w", err)
@@ -21,19 +29,25 @@ func (r *repo) Update(ctx context.Context, packID uint64, name string) (bool, er
 
 	pack := model.Pack{
 		ID:      packID,
-		Name:    name,
 		Updated: time.Now(),
 	}
 
 	updateQuery := sq.Update("packs").
-		Set("name", pack.Name).
 		Set("updated", pack.Updated).
 		Where(sq.Eq{"id": pack.ID, "removed": false}).
-		Suffix("RETURNING created").
+		Suffix("RETURNING name, describe, created").
 		RunWith(tx).
 		PlaceholderFormat(sq.Dollar)
 
-	if err := updateQuery.QueryRowContext(ctx).Scan(&pack.Created); err != nil {
+	if describe != "" {
+		updateQuery = updateQuery.Set("describe", describe)
+	}
+
+	if name != "" {
+		updateQuery = updateQuery.Set("name", name)
+	}
+
+	if err := updateQuery.QueryRowContext(ctx).Scan(&pack.Name, &pack.Describe, &pack.Created); err != nil {
 		return false, fmt.Errorf("exec query: %w", err)
 	}
 

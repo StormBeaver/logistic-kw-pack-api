@@ -37,7 +37,7 @@ func (o *packAPI) UpdatePackV1(
 		Str("name", req.GetName()).
 		Str("describe", req.GetDescribe()).Msg("update arguments")
 
-	updated, err := o.repo.Update(ctx, req.GetPackId(), req.GetName())
+	updated, err := o.repo.Update(ctx, req.GetPackId(), req.GetName(), req.GetDescribe())
 
 	if err != nil {
 		logger.Error().Err(err).Msg("UpdatePackV1 -- failed")

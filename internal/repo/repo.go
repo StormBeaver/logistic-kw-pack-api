@@ -10,10 +10,10 @@ import (
 
 // Repo is DAO for Pack
 type Repo interface {
-	Add(ctx context.Context, name string) (uint64, error)
+	Add(ctx context.Context, name string, describe string) (uint64, error)
 	Get(ctx context.Context, packID uint64) (*model.Pack, error)
 	List(ctx context.Context, cursor uint64, limit uint64) ([]*model.Pack, error)
-	Update(ctx context.Context, packId uint64, name string) (bool, error)
+	Update(ctx context.Context, packId uint64, name string, describe string) (bool, error)
 	Remove(ctx context.Context, packID uint64) (bool, error)
 }
 
