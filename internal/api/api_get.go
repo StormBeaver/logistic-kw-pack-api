@@ -38,15 +38,9 @@ func (o *packAPI) GetPackV1(
 	pack, err := o.repo.Get(ctx, req.GetPackId())
 	if err != nil {
 		logger.Error().Err(err).Msg("GetPackV1 -- failed")
-
-		return nil, status.Error(codes.Internal, err.Error())
-	}
-
-	if pack == nil {
-		logger.Debug().Uint64("packId", req.PackId).Msg("pack not found")
 		totalPackNotFound.Inc()
 
-		return nil, status.Error(codes.NotFound, "pack not found")
+		return nil, status.Error(codes.NotFound, err.Error())
 	}
 
 	logger.Debug().Msg("DescribePackV1 - success")
