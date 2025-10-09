@@ -17,7 +17,7 @@ func (r *repo) Get(ctx context.Context, packID uint64) (*model.Pack, error) {
 
 	var pack model.Pack
 	if err := packQuery.QueryRowContext(ctx).Scan(&pack.ID, &pack.Name, &pack.Created); err != nil {
-		return nil, fmt.Errorf("exec query and scan to pack: %w", err)
+		return nil, fmt.Errorf("exec query: %w", err)
 	}
 
 	return &pack, nil
