@@ -106,7 +106,7 @@ services:
     volumes:
       - ./swagger:/swagger
     environment:
-      SWAGGER_FILE: /swagger/logisticPack/logistic_pack_api/v1/logistic_pack_api.swaggser.json/logistic_pack_api.swaggser.json #SWAGGER_JSON: in past
+      SWAGGER_JSON: /swagger/logisticPack/logistic_pack_api/v1/logistic_pack_api.swagger.json #SWAGGER_JSON: in past
     depends_on:
       - logistic-pack-api
     networks:
@@ -130,8 +130,8 @@ services:
       - logisticnw
     volumes:
       - "./prometheus.yml:/etc/prometheus/prometheus.yml"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    extra_hosts: # for local launch
+      - "host.docker.internal:host-gateway" 
 
   grafana:
     image: grafana/grafana:latest
