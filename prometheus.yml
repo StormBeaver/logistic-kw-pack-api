@@ -5,4 +5,5 @@ scrape_configs:
   - job_name: 'prometheus'
     static_configs:
       - targets:
-        - host.docker.internal:9100 # for local app lounch
+        - host.docker.internal:9100 # for grpc-server
+        - host.docker.internal:9101 # for retranslator
