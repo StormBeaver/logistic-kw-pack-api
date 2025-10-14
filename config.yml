@@ -56,10 +56,3 @@ kafka:
   brokers:
     - "kafka:9092"
     - "localhost:9094"
-
-retranslator:
-  consumerCount: 2
-  batchSize: 10
-  produserCount: 28
-  workerCount: 2
-  ticker: 3s
