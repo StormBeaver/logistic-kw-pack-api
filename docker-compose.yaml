@@ -106,7 +106,7 @@ services:
     volumes:
       - ./swagger:/swagger
     environment:
-      SWAGGER_JSON: /swagger/logisticPack/logistic_pack_api/v1/logistic_pack_api.swagger.json #SWAGGER_JSON: in past
+      SWAGGER_JSON: /swagger/logisticPack/logistic_pack_api/v1/logistic_pack_api.swagger.json
     depends_on:
       - logistic-pack-api
     networks:
