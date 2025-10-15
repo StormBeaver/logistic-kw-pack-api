@@ -52,6 +52,7 @@ func (o *packAPI) UpdatePackV1(
 	}
 
 	logger.Debug().Msg("UpdatePackV1 - success")
+	totalPackCUDEvents.Inc()
 
 	return &pb.UpdatePackV1Response{
 		Found: true,
