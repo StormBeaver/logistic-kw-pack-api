@@ -51,9 +51,8 @@ database:
 
 
 kafka:
-  capacity: 512
   topic: "logistic-pack-events"
   groupId: "logistic-pack-api"
   brokers:
     - "kafka:9092"
-    - "localhost:9094"
+    # - "localhost:9094"

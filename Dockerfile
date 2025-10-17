@@ -1,8 +1,7 @@
 # Builder
+FROM golang:1.24.1-alpine AS builder
 
 ARG GITHUB_PATH=github.com/StormBeaver/logistic-pack-api
-
-FROM golang:1.24.1-alpine AS builder
 
 WORKDIR /home/${GITHUB_PATH}
 
@@ -14,8 +13,12 @@ RUN make build-go
 
 # gRPC Server
 
-FROM alpine:latest as server
-LABEL org.opencontainers.image.source https://${GITHUB_PATH}
+FROM alpine:latest AS server
+
+ARG GITHUB_PATH=github.com/StormBeaver/logistic-pack-api
+
+LABEL org.opencontainers.image.source=https://${GITHUB_PATH}
+
 RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 
@@ -25,8 +28,9 @@ COPY --from=builder /home/${GITHUB_PATH}/migrations/ ./migrations
 
 RUN chown root:root grpc-server
 
-EXPOSE 50051
 EXPOSE 8080
+EXPOSE 8082
 EXPOSE 9100
+EXPOSE 8000
 
 CMD ["./grpc-server"]

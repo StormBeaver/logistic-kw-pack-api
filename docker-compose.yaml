@@ -2,9 +2,7 @@
 version: "3.9"
 services:
   logistic-pack-api:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: stormbeaver/logistic-pack-api:latest
     restart: unless-stopped
     networks:
       - logisticnw
@@ -19,7 +17,7 @@ services:
       - 8082:8082 # gRPC
       - 9100:9100 # Metrics prometheus
       - 8000:8000 # Status prometheus
-      - 40000:40000 # Debug port
+      # - 40000:40000 # Debug port
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://localhost:8000/live']
       interval: 1m
@@ -29,6 +27,42 @@ services:
     volumes:
       - ./migrations:/root/migrations
       - ./config.yml:/root/config.yml
+
+  logistic-pack-retranslator:
+    image: stormbeaver/logistic-pack-retranslator:latest
+    restart: unless-stopped
+    ports: 
+      - 9101:9101 # metrics
+    depends_on:
+      - postgres
+      - kafka
+    links:
+      - postgres
+      - kafka
+    networks:
+      - logisticnw
+
+  logistic-pack-facade:
+    image: stormbeaver/logistic-pack-facade:latest
+    restart: unless-stopped
+    depends_on:
+      - kafka
+    links:
+      - kafka
+    networks:
+      - logisticnw
+
+  logistic-pack-bot:
+    image: stormbeaver/logistic-pack-bot:latest
+    restart: unless-stopped
+    depends_on:
+      - logistic-pack-api
+      - postgres
+    links:
+      - logistic-pack-api
+      - postgres
+    networks:
+      - logisticnw
 
   postgres:
     image: postgres:latest
@@ -102,7 +136,7 @@ services:
     image: swaggerapi/swagger-ui
     ports:
       - 8081:8080
-    restart: always
+    restart: unless-stopped
     volumes:
       - ./swagger:/swagger
     environment:
