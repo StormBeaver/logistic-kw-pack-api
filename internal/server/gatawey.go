@@ -12,6 +12,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 
 	pb "github.com/StormBeaver/logistic-pack-api/pkg/logistic-pack-api"
 )
@@ -26,11 +27,7 @@ var (
 func createGatewayServer(grpcAddr, gatewayAddr string) *http.Server {
 	// Create a client connection to the gRPC Server we just started.
 	// This is where the gRPC-Gateway proxies the requests.
-	conn, err := grpc.DialContext(
-		context.Background(),
-		grpcAddr,
-		grpc.WithInsecure(),
-	)
+	conn, err := grpc.NewClient(grpcAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to dial server")
 	}
