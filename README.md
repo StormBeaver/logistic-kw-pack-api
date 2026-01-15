@@ -1,143 +1,61 @@
-#  Logistic Pack API
+Проект выполнен в рамках курса [Route256 2021 OZON](https://rutracker.org/forum/viewtopic.php?t=6201055)
 
----
+#### Репозиторий с заданиями
+https://github.com/ozonmp/omp-docs
 
-## Build project
+# О проекте
+Проект включает в себя помимо настоящего репозиториия, ещё три:
+* https://github.com/StormBeaver/logistic-pack-bot — телеграм бот;
+* https://github.com/StormBeaver/logistic-pack-retranslator - ретранслятор;
+* https://github.com/StormBeaver/logistic-pack-facade — фасад.
 
-### Local
+## gRPC-server
+Проект представленный в данном репозитории является gRPC-server'ом, который объединяет три проекта указанных выше. 
 
-For local assembly you need to perform
+### API
+Protobuf контракт API описан в `api\logisticPack\logistic_pack_api\v1\logistic_pack_api.proto`, предоставляет CRUD-методы. Код grpc объектов, методов, валидации вынесен в отдельный модуль `pkg\logistic-package-api`.
 
-```zsh
-$ make deps # Installation of dependencies
-$ make build # Build project
-```
-## Running
+В обработчиках запросов имеется возможность поднять уровень логирования с помощью метаданных запроса. Для этого необходимо передать по ключу `"grpc-metadata-log-level"` значение `"debug"` или другой иной уровень логирования.
 
-### For local development
+### Repository
+Данные хранятся в Postgres. Методы пакета `internal/repo` повторяют методы `internal/api`, однако, при этом, реализуют паттерн [transactional outbox](https://microservices.io/patterns/data/transactional-outbox.html). Помимо изменения основной таблицы, хранящей записи о сущностях домена `pack`, при выполнении CUD-методов добавляется запись в таблицу `packs_events`, описывающая произошедшие изменения.
 
-```zsh
-$ docker-compose up -d
-```
+Текст SQL-запросов собирается с помощью [squirell](https://github.com/Masterminds/squirrel).
 
----
+#### Миграции
+Миграции описаны в `migrations`.
 
-## Services
+Индексы созданы:
+* на столбцах `id, removed` в таблице `packs`, поскольку по нему идут условия `WHERE` в запросах `Get`, `Remove`, `Update`;
+* на столбце `id` в таблице `packs_events`, поскольку по нему идёт условие `WHERE` в запросах ретранслятора (см. О проекте).
 
-### Swagger UI
+## Метрики
+Сервис собирает метрики с помощью [Prometheus](https://github.com/prometheus/client_golang).
 
-The Swagger UI is an open source project to visually render documentation for an API defined with the OpenAPI (Swagger) Specification
+### Метрики gRPC-server'a
+grpc-сервер собирает две метрики:
+* `totalPackNotFound` _Counter_ — общее количество NotFound событий;
+* `totalPackCUDEvents` _Counter_ — общее количество CUD событий.
 
-- http://localhost:8081
+Метрики grpc-сервера доступны на `:9100/metrics`.
 
-### Grafana:
+### Grafana и Prometheus
 
-- http://localhost:3000
-- - login `admin`
-- - password `MYPASSWORT`
+С заданным интервалом Prometheus считывает метрики сервисов. Метрики запрашиваются Grafan'ой и отображаются на графике:
+`logistic_pack_api_not_found_total` и `logistic_pack_api_cud_found_total` — рассчитывая количество происходящих событий в секунду в окне в 1 минуту.
 
-### gRPC:
+Grafana доступна на `:3000`.
 
-- http://localhost:8082
+## Jaeger
 
-```sh
-[I] ➜ grpc_cli call localhost:8082 DescribePackV1 "id: 1"
-connecting to localhost:8082
-Rpc failed with status code 5, error message: pack not found
-```
+Обработчики запросов gRPC-server'a записывает трейсы и отправляет их в Jaeger. Трейсы имеют вложенные спаны методов репозиторя и SQL-запросов.
 
-### Gateway:
+Jaeger доступен на `:16686`.
 
-It reads protobuf service definitions and generates a reverse-proxy server which translates a RESTful HTTP API into gRPC
+## Docker
 
-- http://localhost:8080
+Описаны докерфайлы для образов gRPS-server'a.
 
-```sh
-[I] ➜ curl -s -X 'POST' \
-  'http://localhost:8080/v1/packs' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "id": "1"
-}' | jq .
-{
-  "code": 5,
-  "message": "pack not found",
-  "details": []
-}
-```
+## Makefile
 
-### Metrics:
-
-Metrics GRPC Server
-
-- http://localhost:9100/metrics
-
-### Status:
-
-Service condition and its information
-
-- http://localhost:8000
-- - `/live`- Layed whether the server is running
-- - `/ready` - Is it ready to accept requests
-- - `/version` - Version and assembly information
-
-### Prometheus:
-
-Prometheus is an open-source systems monitoring and alerting toolkit
-
-- http://localhost:9090
-
-### Kafka
-
-Apache Kafka is an open-source distributed event streaming platform used by thousands of companies for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.
-
-- http://localhost:9094
-
-### Kafka UI
-
-UI for Apache Kafka is a simple tool that makes your data flows observable, helps find and troubleshoot issues faster and deliver optimal performance. Its lightweight dashboard makes it easy to track key metrics of your Kafka clusters - Brokers, Topics, Partitions, Production, and Consumption.
-
-- http://localhost:9001
-
-### Jaeger UI
-
-Monitor and troubleshoot transactions in complex distributed systems.
-
-- http://localhost:16686
-
-### Graylog
-
-Graylog is a leading centralized log management solution for capturing, storing, and enabling real-time analysis of terabytes of machine data.
-
-- http://localhost:9000
-- - login `admin`
-- - password `admin`
-
-### PostgreSQL
-
-For the convenience of working with the database, you can use the [pgcli](https://github.com/dbcli/pgcli) utility. Migrations are rolled out when the service starts. migrations are located in the **./migrations** directory and are created using the [goose](https://github.com/pressly/goose) tool.
-
-```sh
-$ pgcli "postgresql://docker:docker@localhost:5432/logistic_pack_api"
-```
-
-### Python client
-
-```shell
-$ python -m venv .venv
-$ . .venv/bin/activate
-$ make deps
-$ make generate
-$ cd pypkg/logistic-pack-api
-$ python setup.py install
-$ cd ../..
-$ docker-compose up -d
-$ python scripts/grpc_client.py
-```
-
-
-### Thanks
-
-- [Evald Smalyakov](https://github.com/evald24)
-- [Michael Morgoev](https://github.com/zerospiel)
+В мейкфайле описаны команды для локального запуска приложения, для генерации protobuf модулей с помощью утилиты buf, сборки докер-образов, и их запуска.
