@@ -13,7 +13,7 @@ https://github.com/ozonmp/omp-docs
 Проект представленный в данном репозитории является gRPC-server'ом, который объединяет три проекта указанных выше. 
 
 ### API
-Protobuf контракт API описан в `api\logisticPack\logistic_pack_api\v1\logistic_pack_api.proto`, предоставляет CRUD-методы. Код grpc объектов, методов, валидации вынесен в отдельный модуль `pkg\logistic-package-api`.
+Protobuf контракт API описан в `api\logisticPack\logistic_pack_api\v1\logistic_pack_api.proto`, предоставляет CRUD-методы. Код grpc объектов, методов, валидации вынесен в отдельный модуль `pkg\logistic-pack-api`.
 
 В обработчиках запросов имеется возможность поднять уровень логирования с помощью метаданных запроса. Для этого необходимо передать по ключу `"grpc-metadata-log-level"` значение `"debug"` или другой иной уровень логирования.
 
