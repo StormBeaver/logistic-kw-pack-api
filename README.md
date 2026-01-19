@@ -10,7 +10,7 @@ https://github.com/ozonmp/omp-docs
 * https://github.com/StormBeaver/logistic-pack-facade — фасад.
 
 ## gRPC-server
-Проект представленный в данном репозитории является gRPC-server'ом, который объединяет три проекта указанных выше. 
+Проект, представленный в данном репозитории, является gRPC-server'ом, который объединяет три проекта указанных выше. 
 
 ### API
 Protobuf контракт API описан в `api\logisticPack\logistic_pack_api\v1\logistic_pack_api.proto`, предоставляет CRUD-методы. Код grpc объектов, методов, валидации вынесен в отдельный модуль `pkg\logistic-pack-api`.
